@@ -1,0 +1,63 @@
+.moviecard {
+    padding: 1rem;
+    flex: 1 1 300px;
+    max-width: 350px;
+  }
+  
+  .moviecard .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.3s;
+  }
+/*   
+  .card:hover {
+    transform: translateY(-5px);
+  } */
+  
+  .moviecard .card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .moviecard .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
+  }
+  
+  .moviecard .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .moviecard .card-text {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .moviecard .card-body p {
+    font-size: 0.85rem;
+  }
+  
+  .moviecard .card-body .btn {
+    margin-top: 0.5rem;
+  }
+  
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    .moviecard {
+      max-width: 100%;
+    }
+  }
+  

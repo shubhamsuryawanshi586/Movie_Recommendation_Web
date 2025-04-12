@@ -1,0 +1,17 @@
+ .landingpage
+ {
+   min-height: 100vh;
+   margin-top: 3.4rem;
+ }
+ 
+ .landingpage .container {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .moviesbox .row
+  {
+    min-height: 600px;
+  }

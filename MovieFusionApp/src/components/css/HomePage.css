@@ -1,0 +1,137 @@
+/* Homepage Layout */
+.homepage {
+  min-height: 100vh;
+  text-align: center;
+  margin-top: 2.5rem;
+  padding: 20px;
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #222;
+  font-weight: bold;
+}
+
+/* Genre List - WRAP style */
+.genre-list {
+  display: flex;
+  flex-wrap: wrap; /* allow wrapping */
+  gap: 1rem;
+  list-style: none;
+  padding: 1rem 0;
+  margin: 0;
+  justify-content: center; /* center the genre items */
+}
+
+/* Genre Item */
+.genre-list li {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background: #eee;
+  border-radius: 20px;
+  transition: background 0.3s, color 0.3s;
+  font-size: 1rem;
+  white-space: nowrap; /* keep text in one line */
+}
+
+.genre-list li.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Slider (for movies) */
+.slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Single Slide */
+.slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  min-width: 220px;
+  background: #fff;
+  transition: transform 0.3s;
+}
+
+/* Poster Image */
+.poster-container {
+  position: relative;
+}
+
+.poster-image {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+/* Overlay on Poster */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 0 0 15px 15px;
+}
+
+/* Movie Title (optional if needed) */
+.movie-title {
+  font-size: 1rem;
+  margin: 5px 0 0;
+}
+
+/* Movie Rating */
+.movie-rating {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Hover Effects */
+.slide:hover .poster-image {
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .slide {
+    min-width: 160px;
+  }
+
+  .poster-image {
+    height: 260px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide {
+    min-width: 140px;
+  }
+
+  .poster-image {
+    height: 220px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+}

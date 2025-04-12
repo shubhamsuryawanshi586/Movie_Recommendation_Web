@@ -1,0 +1,108 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from '../services/AuthService';
+
+const UserRegisterPage = () => {
+  const [formData, setFormData] = useState({
+    user_name: '',
+    email: '',
+    password: '',
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = { ...formData, user_role_id: 1 }; // Assign role ID 1 for User
+    try {
+      await AuthService.userRegister(payload);
+      toast.success('Registration successful. Please login.', {
+        onClose: () => navigate('/login'),
+        autoClose: 2000, 
+      });
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Registration failed.');
+      console.error(err);
+    }
+  };
+
+  return (
+    <div className="d-flex justify-content-center align-items-center min-vh-100 p-2">
+      <ToastContainer position="top-center" />
+      <div
+        className="card p-3 shadow-lg"
+        style={{
+          width: '100%',
+          maxWidth: '400px',
+          borderRadius: '20px',
+          background: '#ffffffee',
+        }}
+      >
+        <div className="text-center mb-4">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="User Icon"
+            style={{ width: '60px', marginBottom: '10px' }}
+          />
+          <h2 className="fw-bold">User Registration</h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              className="form-control rounded-3"
+              name="user_name"
+              placeholder="Name"
+              value={formData.user_name}
+              onChange={handleChange}
+              required
+              autoComplete="name"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              className="form-control rounded-3"
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="form-control rounded-3"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              autoComplete="new-password"
+            />
+          </div>
+          <button className="btn btn-primary w-100 rounded-3" type="submit">
+            Register as User
+          </button>
+        </form>
+        <div className="text-center mt-3">
+          <small className="text-muted">
+            Already have an account?{' '}
+            <Link to="/login" className="text-primary text-decoration-none">
+              Login
+            </Link>
+          </small>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UserRegisterPage;
