@@ -5,6 +5,7 @@ import TMDB from '../services/TMDB';
 const MovieCard = ({ movie, showReviewButton }) => {
 
   const [posterUrl, setPosterUrl] = useState('/default-poster.jpg');
+  console.log('showReviewButton:', showReviewButton);
 
   useEffect(() => {
     const fetchPoster = async () => {

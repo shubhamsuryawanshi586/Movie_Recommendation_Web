@@ -3,11 +3,15 @@ import MovieService from '../services/MovieService.js';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 import SearchBar from '../components/SearchBar';
+import AuthService from '../services/AuthService';
+
 const SearchResultsPage = () => {
+  const user = AuthService.getCurrentAccount(); // check login
+  console.log("Logged-in user:", user); // This should show the user object
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [params] = useSearchParams();
-
+  
   useEffect(() => {
     const query = params.get('q');
     if (query) {
@@ -39,7 +43,7 @@ const SearchResultsPage = () => {
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
                 {movies.map(movie => (
                   <div className="col d-flex justify-content-center" key={movie.movie_id}>
-                    <MovieCard movie={movie} showReviewButton={true} />
+                    <MovieCard movie={movie} showReviewButton={!!user} />
                   </div>
                 ))}
               </div>
