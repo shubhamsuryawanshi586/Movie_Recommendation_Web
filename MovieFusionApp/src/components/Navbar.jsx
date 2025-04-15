@@ -97,6 +97,14 @@ const Navbar = () => {
                 </li>
               )}
 
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/about" onClick={closeNavbar}>About us</NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/contact" onClick={closeNavbar}>Contact</NavLink>
+              </li>
+
             </ul>
           </div>
 

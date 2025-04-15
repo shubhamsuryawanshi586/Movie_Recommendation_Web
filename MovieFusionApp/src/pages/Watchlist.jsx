@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieService from "../services/MovieService";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-const Watchlist = () => {
+const AboutUs = () => {
   const [watchlist, setWatchlist] = useState([]);
 
   // useEffect(() => {
@@ -31,4 +31,4 @@ const Watchlist = () => {
   );
 };
 
-export default Watchlist;
+export default AboutUs;

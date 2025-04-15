@@ -13,7 +13,7 @@ const MovieReview = () => {
   };
 
   const handleClose = () => {
-    navigate('/'); 
+    navigate('/movies'); 
   };
 
   return (

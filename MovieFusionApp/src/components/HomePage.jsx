@@ -1,53 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import TMDB from '../services/TMDB';
+import MovieService from '../services/MovieService';
 import './css/HomePage.css';
 
-// 🎯 Expanded Genre List
 const GENRES = [
-  { label: 'Trending', type: 'trending' },
-  { label: 'Popular', type: 'popular' },
-  { label: 'Action', type: '28' },
-  { label: 'Adventure', type: '12' },
-  { label: 'Animation', type: '16' },
-  { label: 'Comedy', type: '35' },
-  { label: 'Crime', type: '80' },
-  { label: 'Documentary', type: '99' },
-  { label: 'Drama', type: '18' },
-  { label: 'Family', type: '10751' },
-  { label: 'Fantasy', type: '14' },
-  { label: 'History', type: '36' },
-  { label: 'Horror', type: '27' },
-  { label: 'Music', type: '10402' },
-  { label: 'Mystery', type: '9648' },
-  { label: 'Romance', type: '10749' },
-  { label: 'Science Fiction', type: '878' },
-  { label: 'TV Movie', type: '10770' },
-  { label: 'Thriller', type: '53' },
-  { label: 'War', type: '10752' },
-  { label: 'Western', type: '37' },
+  // { label: 'Trending', type: 'Trending' },
+  // { label: 'Popular', type: 'Popular' },
+  { label: 'Action', type: 'Action' },
+  { label: 'Adventure', type: 'Adventure' },
+  { label: 'Animation', type: 'Animation' },
+  { label: 'Comedy', type: 'Comedy' },
+  { label: 'Crime', type: 'Crime' },
+  // { label: 'Documentary', type: 'Documentary' },
+  { label: 'Drama', type: 'Drama' },
+  { label: 'Family', type: 'Family' },
+  { label: 'Fantasy', type: 'Fantasy' },
+  // { label: 'History', type: 'History' },
+  { label: 'Horror', type: 'Horror' },
+  // { label: 'Music', type: 'Music' },
+  { label: 'Mystery', type: 'Mystery' },
+  { label: 'Romance', type: 'Romance' },
+  { label: 'Science Fiction', type: 'Science Fiction' },
+  // { label: 'TV Movie', type: 'TV Movie' },
+  { label: 'Thriller', type: 'Thriller' },
+  { label: 'War', type: 'War' },
+  // { label: 'Western', type: 'Western' },
 ];
+
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState('trending');
+  const [selectedGenre, setSelectedGenre] = useState('Action');
+  const [posterUrls, setPosterUrls] = useState({}); // store multiple poster URLs
 
   useEffect(() => {
     const fetchMovies = async () => {
-      let data = [];
-
-      if (selectedGenre === 'trending') {
-        data = await TMDB.getTrendingMovies();
-      } else if (selectedGenre === 'popular') {
-        data = await TMDB.getPopularMovies();
-      } else {
-        data = await TMDB.getMoviesByGenre(selectedGenre);
+      try {
+        const res = await MovieService.getMoviesByGenre(selectedGenre);
+        // console.log('Movies API response:', res.data); 
+        setMovies(res.data.movies || res.data);
+      } catch (err) {
+        console.error('Error fetching movies', err);
       }
-
-      setMovies(data);
     };
 
     fetchMovies();
   }, [selectedGenre]);
+
+  useEffect(() => {
+    const fetchPosters = async () => {
+      const urls = {};
+      for (const movie of movies) {
+        try {
+          const url = await TMDB.fetchMoviePosterByTitle(movie.movie_title);
+          urls[movie.movie_title] = url;
+        } catch (error) {
+          // console.error('Error fetching poster for:', movie.movie_title, error);
+          urls[movie.movie_title] = '/default-poster.jpg'; 
+        }
+      }
+      setPosterUrls(urls);
+    };
+    if (movies.length > 0) {
+      fetchPosters();
+    }
+  }, [movies]);
 
   return (
     <div className='homepage'>
@@ -64,22 +81,12 @@ const HomePage = () => {
         ))}
       </ul>
 
-      {/* 🏷️ Dynamic Section Title */}
-      {/* <h1 className='section-title'>{GENRES.find(g => g.type === selectedGenre)?.label} Movies</h1> */}
-
       {/* 🎞️ Movie Slider */}
       <div className="slider">
         {movies.map((movie) => (
           <div key={movie.id} className="slide">
             <div className="poster-container">
-              <img 
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-                alt={movie.title} 
-                className="poster-image"
-              />
-              <div className="overlay">
-                <p className="movie-rating">⭐ {movie.vote_average.toFixed(1)}</p>
-              </div>
+              <img className="poster-image" src={posterUrls[movie.movie_title] || '/default-poster.jpg'}  alt={movie.movie_title}/>
             </div>
           </div>
         ))}

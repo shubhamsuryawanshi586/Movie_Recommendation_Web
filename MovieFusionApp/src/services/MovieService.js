@@ -30,6 +30,11 @@ class MovieService {
         return axios.get(`${API_BASE}/search/${query}`);
     }
 
+    getMoviesByGenre = async (genrename) => {
+       return axios.get(`${API_BASE}/category/${genrename}`);
+      };
+
+
 }
 
 export default new MovieService();

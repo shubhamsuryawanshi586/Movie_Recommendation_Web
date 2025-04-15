@@ -17,7 +17,9 @@ import MovieReview from './components/MovieReview';
 import MovieRating from './components/MovieRating';
 import Recommendations from './pages/Recommendations';
 import Watchlist from './pages/Watchlist';
-import MovieList from './pages/MovieList'
+import MovieList from './pages/MovieList';
+import Contact from './pages/Contact';
+import AboutUs from './pages/AboutUs';
 
 const MovieApp = () => {
   return (
@@ -44,6 +46,9 @@ const MovieApp = () => {
             <Route path="/movie/:id/rating" element={<MovieRating />} />
             <Route path="/movie/recommendation" element={<Recommendations/>}/>
             <Route path="/movie/watchlist" element={<Watchlist/>}/>
+            <Route path='/about' element={<AboutUs/>}/>
+            <Route path='/contact' element={<Contact/>}/>
+            
           </Routes>
         </div>
         <Footer />

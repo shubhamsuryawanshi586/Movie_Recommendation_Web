@@ -18,7 +18,7 @@ const MovieRating = ({ onRatingSubmit }) => {
   };
 
   const handleClose = () => {
-    navigate('/');
+    navigate('/movies');
   };
 
   return (
