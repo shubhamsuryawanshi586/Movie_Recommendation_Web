@@ -38,6 +38,7 @@ const MovieApp = () => {
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/profile" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
+           
             <Route path="/admin/add" element={<ProtectedRoute role="Admin"><AddEditMoviePage /></ProtectedRoute>} />
             <Route path="/admin/edit/:id" element={<ProtectedRoute role="Admin"><AddEditMoviePage /></ProtectedRoute>} />
 
