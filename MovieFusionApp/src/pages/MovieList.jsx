@@ -22,8 +22,8 @@ const MovieList = () => {
   }, []);
 
   return (
-    <div className='landingpage'>
-      <div className="container mt-4">
+    <div className='landingpage' style={{marginTop:'80.5px'}}>
+      <div className="container">
         <div className='moviesbox'>
           <h2 className="mb-4 ">🎬 Explore Movies</h2>
           <div  className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4 ">

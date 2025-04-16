@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className='admindashboard'>
+    <div className='admindashboard' style={{ marginTop: '60px' }}>
       <div className="container-fluid px-3 py-4">
         <h2 className="mb-4">Admin Dashboard</h2>
 
@@ -38,14 +38,14 @@ const AdminDashboard = () => {
           <Link className="btn btn-success" to="/admin/add">Add Movie</Link>
           <input
             type="text"
-            className="form-control" style={{width:'90%'}}
+            className="form-control" style={{ maxWidth: '65%' }}
             placeholder="Search by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="table-responsive">
+        <div className="table-responsive-md">
           <table className="table table-bordered table-hover align-middle">
             <thead className="table-light">
               <tr>
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
                     <td>{m.movie_director_name}</td>
                     <td>{m.movie_category}</td>
                     <td>
-                      <div className="d-grid gap-2 d-md-flex">
+                      <div className="d-grid gap-2 d-md-flex flex-column flex-md-row">
                         <Link className="btn btn-sm btn-primary" to={`/admin/edit/${m.movie_id}`}>
                           Edit
                         </Link>
@@ -74,6 +74,7 @@ const AdminDashboard = () => {
                           Delete
                         </button>
                       </div>
+
                     </td>
                   </tr>
                 ))

@@ -1,8 +1,6 @@
-/* Homepage Layout */
 .homepage {
   min-height: 100vh;
   text-align: center;
-  margin-top: 2.5rem;
   padding: 20px;
 }
 
@@ -21,7 +19,7 @@
   flex-wrap: wrap; /* allow wrapping */
   gap: 1rem;
   list-style: none;
-  padding: 1rem 0;
+  padding: 2rem 0;
   margin: 0;
   justify-content: center; /* center the genre items */
 }
