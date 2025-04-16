@@ -1,4 +1,10 @@
-.footer
-{
-    margin-top: 100vh;
-}
+footer {
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+  }
+  .nav-link {
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover {
+    color: #f39c12; /* or any brand color */
+  }
+    

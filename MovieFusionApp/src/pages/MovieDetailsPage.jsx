@@ -34,7 +34,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div className='moviedetailscard'>
-      <div className="container my-4 d-flex flex-column" style={{ minHeight: '80vh' }}>
+      <div className="container my-4 d-flex flex-column" style={{ minHeight: '10vh' }}>
         {/* Heading + Close button */}
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="mb-0">{movie.movie_title}</h2>

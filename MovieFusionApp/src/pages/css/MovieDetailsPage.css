@@ -4,6 +4,7 @@
     align-items: center; 
     margin-top: 2em;
     padding: 2rem;
+    min-height: 90vh;
   }
   
   .moviedetailscard .container {

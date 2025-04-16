@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
+// import SearchBar from './SearchBar'
+import './css/NavBar.css';
+import './css/SearchBar.css';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -42,7 +45,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 ">
+    <nav className="main-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 " style={{ marginBottom: '400px' }}>
       <div className="container-fluid">
         {/* Brand */}
         <Link className="navbar-brand" to="/" onClick={closeNavbar}>🎬 Movie Fusion</Link>
@@ -72,41 +75,47 @@ const Navbar = () => {
                 <NavLink className="nav-link" to="/movies" onClick={closeNavbar}>Movies</NavLink>
               </li>
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/search" onClick={closeNavbar}>Search</NavLink>
-              </li>
-
               {/* Admin Dashboard */}
               {user?.user_role_name === 'Admin' && (
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/admin/dashboard" data-disabled="true" onClick={closeNavbar}>Dashboard</NavLink>
+                  <NavLink className="nav-link" to="/admin/dashboard" onClick={closeNavbar}>Dashboard</NavLink>
                 </li>
               )}
 
               {/* Movie WatchList */}
-              {user && (
+              {user && user?.user_role_name !== 'Admin' && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/movie/watchlist" onClick={closeNavbar}>WatchList</NavLink>
                 </li>
               )}
 
               {/* Movie Recommendation */}
-              {user && (
+              {user && user?.user_role_name !== 'Admin' &&(
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/movie/recommendation" onClick={closeNavbar}>Recommended Movies</NavLink>
                 </li>
               )}
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about" onClick={closeNavbar}>About us</NavLink>
-              </li>
-
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/contact" onClick={closeNavbar}>Contact</NavLink>
-              </li>
-
             </ul>
           </div>
+
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
+          <div className="searchbar-container">
+            <div className='searchbar'>
+              <form className="d-flex my-0" onSubmit={handleSearchSubmit}>
+                <input
+                  type="text"
+                  className="form-control me-2"
+                  placeholder="Search movies..."
+                  value={query} onChane={closeNavbar}
+                  onChange={(e) => setQuery(e.target.value.trimStart())}
+                />
+                <button className="btn btn-primary" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+
+          </ul>
 
           {/* Right Side */}
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -133,9 +142,9 @@ const Navbar = () => {
                   <li><Link className="dropdown-item" to="/login" onClick={closeNavbar}>User Login</Link></li>
                   <li><Link className="dropdown-item" to="/register" onClick={closeNavbar}>User Register</Link></li>
                   <li><Link className="dropdown-item" to="/admin/login" onClick={closeNavbar}>Admin Login</Link></li>
-
-                  <li><Link className="dropdown-item dropdown-item disabled" to="/admin/register" onClick={closeNavbar}>Admin Register</Link></li>
-
+                  {(user?.user_role_name === 'Admin' &&
+                    <li><Link className="dropdown-item dropdown-item disabled" to="/admin/register" onClick={closeNavbar}>Admin Register</Link></li>
+                  )}
 
                 </ul>
               </li>

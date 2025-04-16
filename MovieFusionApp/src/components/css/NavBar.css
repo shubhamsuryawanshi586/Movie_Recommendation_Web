@@ -1,0 +1,24 @@
+.main-navbar
+{
+    min-height: 80px;
+}
+
+.searchbar-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* background-color: aliceblue; */
+}
+
+.searchbar .form-control {
+  width: 250px;
+  transition: width 0.4s ease;
+  transform-origin: right; /* Makes it grow from the right to the left */
+}
+
+.searchbar .form-control:focus {
+  width: 400px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #80bdff;
+}
+

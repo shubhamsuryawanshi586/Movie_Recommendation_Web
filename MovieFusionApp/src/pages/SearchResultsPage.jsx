@@ -2,16 +2,13 @@ import React, { useEffect, useState } from 'react';
 import MovieService from '../services/MovieService.js';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
-import SearchBar from '../components/SearchBar';
-import AuthService from '../services/AuthService';
+// import SearchBar from '../components/SearchBar';
 
 const SearchResultsPage = () => {
-  const user = AuthService.getCurrentAccount(); // check login
-  console.log("Logged-in user:", user); // This should show the user object
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [params] = useSearchParams();
-  
+
   useEffect(() => {
     const query = params.get('q');
     if (query) {
@@ -25,7 +22,7 @@ const SearchResultsPage = () => {
 
   return (
     <div className='searchresultpage' style={{marginTop:'5rem', minHeight:'73vh'}}>
-      <SearchBar/>
+      {/* <SearchBar/> */}
       <div className="container my-4">
         {/* <h2 className="mb-4 text-center">Search Results</h2>  */}
 
@@ -43,7 +40,7 @@ const SearchResultsPage = () => {
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
                 {movies.map(movie => (
                   <div className="col d-flex justify-content-center" key={movie.movie_id}>
-                    <MovieCard movie={movie} showReviewButton={!!user} />
+                    <MovieCard movie={movie} showReviewButton={true} />
                   </div>
                 ))}
               </div>
