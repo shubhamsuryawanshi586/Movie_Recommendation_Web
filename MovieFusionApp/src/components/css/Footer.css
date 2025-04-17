@@ -1,10 +1,112 @@
-footer {
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
+.main-footer {
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+}
+.main-footer .nav-link {
+  transition: color 0.3s ease;
+}
+.main-footer .nav-link:hover {
+  color: #f39c12; /* or any brand color */
+}
+ footer.bg-dark {
+  background-color: #1a1a1a; /* Dark, solid background */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Simple font stack */
+}
+.main-footer .container {
+  max-width: 1200px; /* Match HomePage slider width */
+}
+/* Headings */
+.main-footer h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+/* About Section */
+.main-footer .col-md-4 p {
+  font-size: 0.9rem;
+  color: #cccccc; /* Light gray for readability */
+  line-height: 1.5;
+}
+/* Social Icons */
+.main-footer .d-flex a {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-right: 1.5rem;
+  transition: color 0.3s ease;
+}
+.main-footer .d-flex a:hover {
+  border-bottom: 2px solid rgb(255, 174, 0);
+  /* Underline effect */
+}
+/* Navigation Links */
+.main-footer  .list-unstyled li {
+  margin-bottom: 0.5rem;
+}
+.main-footer .list-unstyled a {
+  font-size: 0.9rem;
+  color: #cccccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.main-footer .list-unstyled a:hover {
+  color:rgb(255, 255, 255); /* White on hover */
+  border-bottom: 2px solid rgb(255, 174, 0); /* Underline effect */
+}
+/* Newsletter Form */
+.main-footer  .form-control {
+  border: 1px solid #444444;
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  border-radius: 6px; /* Slightly rounded */
+}
+.main-footer  .form-control:focus {
+  border-color: rgb(255, 174, 0); /* Match HomePage theme */
+  box-shadow: none; /* Remove Bootstrap's default shadow */
+}
+.form-control::placeholder {
+  color: #888888; /* Gray placeholder */
+}
+.main-footer  .btn-warning {
+  background-color: rgb(255, 174, 0); /* Match HomePage */
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+.main-footer .btn-warning:hover {
+  background-color: rgb(220, 150, 0); 
+}
+.main-footer  .text-muted {
+  font-size: 0.8rem;
+  color: #ffffff !important; 
+}
+
+.main-footer .mb-2 p {
+  font-size: 0.8rem;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333333; 
+}
+
+@media (max-width: 767.98px) {
+  .main-footer  .col-md-4 {
+    text-align: center; 
+    margin-bottom: 2rem;
   }
-  .nav-link {
-    transition: color 0.3s ease;
+  .main-footer .d-flex {
+    justify-content: center; 
   }
-  .nav-link:hover {
-    color: #f39c12; /* or any brand color */
+  .main-footer .list-unstyled {
+    text-align: center;
   }
-    
+}
+
+
+
+
+
+
+

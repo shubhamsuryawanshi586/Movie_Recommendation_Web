@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
-
+import Swal from 'sweetalert2';
+ 
 const AdminRegisterPage = () => {
   const [formData, setFormData] = useState({
     adminname: '',
@@ -21,17 +22,39 @@ const AdminRegisterPage = () => {
       admin_name: formData.adminname,
       email: formData.email,
       password: formData.password,
-      userRoleId: 2, 
+      userRoleId: 2, // Assuming 2 is the admin role ID
     };
+  
     try {
       await AuthService.adminRegister(payload);
-      alert('Admin registered successfully. Please login.');
+      
+      await Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful!',
+        text: 'Admin registered successfully. Please login.',
+        position: 'top',
+        width: '300px',
+        toast: true,
+        background: '#ffffff',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+  
       navigate('/admin/login');
     } catch (err) {
-      alert('Registration failed.');
       console.error(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: 'There was an issue with your registration. Please try again.',
+        position: 'top',
+        width: '300px',
+        toast: true,
+        background: '#ffffff',
+      });
     }
   };
+  
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 mt-4 p-2">

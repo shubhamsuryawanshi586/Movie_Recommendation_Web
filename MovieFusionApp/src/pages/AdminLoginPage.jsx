@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/AuthService'; // 👈 Use AuthService, not AdminAuthService
+import AuthService from '../services/AuthService';
+import Swal from 'sweetalert2';
 
 const AdminLoginPage = () => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -17,12 +19,38 @@ const AdminLoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await AuthService.adminLogin({ email, password }); // ✅ Use AuthService.adminLogin
+      await AuthService.adminLogin({ email, password });
+
+      await Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: 'Welcome back, Admin!',
+        timer: 1500,
+        showConfirmButton: false,
+        position: 'top', 
+        width: '300px', 
+        padding: '10px', 
+        toast: true, 
+        background: '#ffffff',
+      });
+
+
       navigate('/admin/dashboard');
     } catch (err) {
-      alert(err.response?.data?.message || 'Admin login failed');
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: 'Please check your email and password.',
+        position: 'top', 
+        width: '300px', 
+        padding: '10px',
+        toast: true,
+        background: '#ffffff',
+      });
+      
     }
   };
+
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 mt-4 p-2">

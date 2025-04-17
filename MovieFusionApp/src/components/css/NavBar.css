@@ -1,6 +1,32 @@
-.navbar
+*
 {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  margin-bottom: 40px;
+}
+
+.nav-item .nav-link {
+  font-size: 15px;
+  font-weight: bolder;
+  /* color: goldenrod; */
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.navbar {
   min-height: 90px;
+  width: 100%;
+}
+
+.navbar-nav {
+  padding-left: 20px;
 }
 
 .searchbar-container {
@@ -8,17 +34,82 @@
   justify-content: center;
   width: 100%;
   /* background-color: aliceblue; */
+  padding-left: 20px;
 }
 
 .searchbar .form-control {
   width: 250px;
   transition: width 0.4s ease;
-  transform-origin: right; /* Makes it grow from the right to the left */
+  transform-origin: right;
 }
 
 .searchbar .form-control:focus {
-  width: 400px;
+  width: 500px;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   border-color: #80bdff;
 }
 
+/* Tablet and below */
+@media (max-width: 768px) {
+  .searchbar {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .searchbar .form-control {
+    width: 80%;
+    max-width: 250px;
+  }
+
+  .searchbar .form-control:focus {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .navbar {
+    min-height: 70px;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .nav-item {
+    margin: 5px 0;
+  }
+
+  .navbar-brand {
+    font-size: 16px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .searchbar {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .searchbar .form-control {
+    width: 80%;
+    max-width: 200px;
+  }
+
+  .searchbar .form-control:focus {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .navbar {
+    min-height: 60px;
+  }
+
+  .navbar-brand {
+    font-size: 14px;
+  }
+  
+  .nav-link {
+    padding: 10px 15px;
+  }
+}

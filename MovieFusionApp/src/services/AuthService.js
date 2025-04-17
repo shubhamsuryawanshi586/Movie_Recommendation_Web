@@ -1,15 +1,17 @@
 import axios from 'axios';
 
-const API = 'http://localhost:8080';
+const API_BASE = 'http://localhost:8080';
 
 class AuthService {
-  // 🧑 User login
+  // User login
   async userLogin(data) {
     try {
-      const response = await axios.post(`${API}/user/login`, data);
+      const response = await axios.post(`${API_BASE}/user/login`, data);
       if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data));
         window.dispatchEvent(new Event('userChanged'));
+        window.location.reload(); // Refresh the page
+        window.location.href = '/'; 
       }
       return response.data;
     } catch (error) {
@@ -18,18 +20,19 @@ class AuthService {
     }
   }
 
-  // 👑 Admin login
-  // 👑 Admin login
+  //  Admin login
 async adminLogin(data) {
   try {
-    const response = await axios.post(`${API}/admin/login`, data);
+    const response = await axios.post(`${API_BASE}/admin/login`, data);
     if (response.data) {
       const adminData = {
         ...response.data,
-        user_role_name: 'Admin', // 👈 Add user_role_name manually here!
+        user_role_name: 'Admin', // Add user_role_name manually here!
       };
       localStorage.setItem('admin', JSON.stringify(adminData));
       window.dispatchEvent(new Event('userChanged'));
+      window.location.reload(); // Refresh the page
+      window.location.href = '/'; 
       return adminData;
     }
     return null;
@@ -40,10 +43,10 @@ async adminLogin(data) {
 }
 
 
-  // 🧑 User registration
+  // User registration
   async userRegister(data) {
     try {
-      const response = await axios.post(`${API}/user/register`, data);
+      const response = await axios.post(`${API_BASE}/user/register`, data);
       return response.data;
     } catch (error) {
       console.error('User registration failed:', error);
@@ -51,10 +54,10 @@ async adminLogin(data) {
     }
   }
 
-  // 👑 Admin registration
+  // Admin registration
   async adminRegister(data) {
     try {
-      const response = await axios.post(`${API}/admin/register`, data);
+      const response = await axios.post(`${API_BASE}/admin/register`, data);
       return response.data;
     } catch (error) {
       console.error('Admin registration failed:', error);
@@ -62,7 +65,7 @@ async adminLogin(data) {
     }
   }
 
-  // 🔥 Get current logged in user or admin
+  // Get current logged in user or admin
   getCurrentAccount() {
     const user = localStorage.getItem('user');
     const admin = localStorage.getItem('admin');
@@ -71,11 +74,13 @@ async adminLogin(data) {
     return null;
   }
 
-  // 🧹 Logout user or admin
+  // Logout user or admin
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('admin');
     window.dispatchEvent(new Event('userChanged'));
+    window.location.reload(); // Refresh the page
+    window.location.href = '/'; 
   }
 
   // 🛠️ Update current user or admin

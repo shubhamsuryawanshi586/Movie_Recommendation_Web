@@ -1,14 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
-// import SearchBar from './SearchBar'
-import './css/Navbar.css';
-import './css/SearchBar.css';
+import './css/NavBar.css';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
+  const navRef = useRef(); //  this effect to close navbar when clicking outside
+  useEffect(() => {
+
+    const handleClickOutside = (event) => {
+      const navbarCollapse = document.getElementById('navbarSupportedContent');
+      if (
+        navbarCollapse &&
+        navbarCollapse.classList.contains('show') &&
+        navRef.current &&
+        !navRef.current.contains(event.target)
+      ) {
+        const bsCollapse = new window.bootstrap.Collapse(navbarCollapse, { toggle: false });
+        bsCollapse.hide();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const updateUser = () => {
@@ -45,11 +62,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className='main' style={{marginBottom:'3rem'}}> 
-      <nav className="main-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 " >
+    <div className='main'>
+      <nav ref={navRef} className="main-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 " >
         <div className="container-fluid" >
           {/* Brand */}
-          <Link className="navbar-brand" to="/" onClick={closeNavbar}>🎬 Movie Fusion</Link>
+          <Link className="navbar-brand" to="/" onClick={closeNavbar}><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion
+          </Link>
 
           {/* Toggle button for mobile */}
           <button
@@ -97,46 +115,43 @@ const Navbar = () => {
                   </li>
                 )}
 
+                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                  <div className="searchbar-container">
+                    <div className='searchbar'>
+                      <form className="d-flex my-0" onSubmit={handleSearchSubmit}>
+                        <input
+                          type="text"
+                          className="form-control me-2"
+                          placeholder="Search movies..."
+                          value={query}
+                          onChange={(e) => setQuery(e.target.value.trimStart())}
+                        />
+                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0); }} className="btn btn-primary" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </div>
+
+                </ul>
               </ul>
+
+
             </div>
 
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
-              <div className="searchbar-container">
-                <div className='searchbar'>
-                  <form className="d-flex my-0" onSubmit={handleSearchSubmit}>
-                    <input
-                      type="text"
-                      className="form-control me-2"
-                      placeholder="Search movies..."
-                      value={query} onChane={closeNavbar}
-                      onChange={(e) => setQuery(e.target.value.trimStart())}
-                    />
-                    <button className="btn btn-primary" type="submit">Search</button>
-                  </form>
-                </div>
-              </div>
 
-            </ul>
 
             {/* Right Side */}
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               {/* Notification Icon */}
-              {user && (
+              {/* {user && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/notifications" title="Notifications" onClick={closeNavbar}>🔔</Link>
+                  <Link className="nav-link disabled" to="/footer" title="Notifications" onClick={closeNavbar}>🔔</Link>
                 </li>
-              )}
+              )} */}
 
               {/* If no user is logged in */}
               {!user && (
                 <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Login
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
@@ -154,19 +169,21 @@ const Navbar = () => {
               {/* If user is logged in */}
               {user && (
                 <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {user.user_name}
+                  <Link className="nav-link d-flex align-items-center gap-2" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <div className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center"
+                      style={{ width: '32px', height: '32px' }}> {user.user_name.charAt(0).toUpperCase()}
+                    </div>
+
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li><Link className="dropdown-item" to="/profile" onClick={closeNavbar}>Profile</Link></li>
-                    <li><Link className="dropdown-item" to="/settings" onClick={closeNavbar}>Settings</Link></li>
-                    <li><button className="dropdown-item" onClick={() => { handleLogout(); closeNavbar(); }}>Logout</button></li>
+                    <li><Link className="dropdown-item" to="/#" onClick={closeNavbar}>Settings</Link></li>
+                    <li>
+                      <button className="dropdown-item" onClick={() => { handleLogout(); closeNavbar(); }}>
+                        Logout
+                      </button>
+                    </li>
                   </ul>
                 </li>
               )}

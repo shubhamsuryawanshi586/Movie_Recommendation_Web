@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube, FaGithub, } from 'react-icons/fa';
-// import logo from '../assets/logo.png'; // replace with actual logo path
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube, FaGithub } from 'react-icons/fa';
+import './css/Footer.css'
 
 const Footer = () => {
-
   const [email, setEmail] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);  // You can replace this with your actual auth logic
+
+   useEffect(() => {
+      const userString = localStorage.getItem('user');
+      setLoggedIn(!!userString);
+    }, []);
 
   const handleSubscribe = () => {
     if (email.trim() !== '') {
-      // Open Gmail in a new tab
       window.open('https://mail.google.com', '_blank');
     } else {
       alert('Please enter a valid email address.');
     }
   };
 
-
   return (
-    <footer className="bg-dark text-white pt-5 pb-3 p-4">
+    <footer className="main-footer text-white pt-5 pb-3 p-4">
       <div className="container">
         <div className="row text-start d-flex justify-content-center">
-          {/* Logo + About */}
           <div className="col-md-4 mb-4">
-            {/* <img src="#" alt="Movie Fusion Logo" style={{ width: '150px' }} className="mb-3" /> */}
             <p className="text-wrap text-break">
               Movie Fusion is your source for discovering great films and timeless classics. Dive into a world of cinema with us.
             </p>
@@ -39,16 +40,23 @@ const Footer = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="col-md-4 mb-4" style={{paddingLeft:"50px"}}>
+          <div className="col-md-4 mb-4">
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
-              <li><NavLink to="/about" className="text-white text-decoration-none">About Us</NavLink></li>
-              <li><NavLink to="/contact" className="text-white text-decoration-none">Contact</NavLink></li>
-              <li><NavLink to="#" className="text-white text-decoration-none">FAQ</NavLink></li>
-              <li><NavLink to="#" className="text-white text-decoration-none">Privacy Policy</NavLink></li>
+              {!loggedIn && (
+                <>
+                  <li><NavLink to="/register" className="text-white" onClick={() => window.scrollTo(0, 0)}>User Register</NavLink></li>
+                  <li><NavLink to="/login" className="text-white" onClick={() => window.scrollTo(0, 0)}>User Login</NavLink></li>
+                </>
+              )}
+              <li><NavLink to="/" className="text-white" onClick={() => window.scrollTo(0, 0)}>Home</NavLink></li>
+              <li><NavLink to="/movies" className="text-white" onClick={() => window.scrollTo(0, 0)}>Movies</NavLink></li>
+              <li><NavLink to="/about" className="text-white" onClick={() => window.scrollTo(0, 0)} >About us</NavLink></li>
+              <li><NavLink to="/contact" className="text-white" onClick={() => window.scrollTo(0, 0)}>Contact us</NavLink></li>
             </ul>
           </div>
 
+          {/* Newsletter Form */}
           <div className="col-md-4">
             <h5>Stay Updated</h5>
             <p>Subscribe to our newsletter to get the latest movie picks and updates.</p>
@@ -66,13 +74,11 @@ const Footer = () => {
               We'll never spam you. Please check your Gmail after subscribing.
             </small>
           </div>
-
-
         </div>
 
         {/* Copyright */}
         <div className="mb-2">
-          <p className="">© {new Date().getFullYear()} Movie Fusion. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Movie Fusion. All rights reserved.</p>
         </div>
       </div>
     </footer>

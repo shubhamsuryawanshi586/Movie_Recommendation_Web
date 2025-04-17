@@ -21,13 +21,13 @@ const SearchResultsPage = () => {
   }, [params]);
 
   return (
-    <div className='searchresultpage' style={{marginTop:'5rem', minHeight:'73vh'}}>
+    <div className='searchresultpage' style={{marginTop:'100px', minHeight:'73vh'}}>
       {/* <SearchBar/> */}
       <div className="container my-4">
         {/* <h2 className="mb-4 text-center">Search Results</h2>  */}
 
         {loading ? (
-          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100px" }}>
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>

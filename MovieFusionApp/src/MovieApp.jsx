@@ -20,14 +20,17 @@ import Watchlist from './pages/Watchlist';
 import MovieList from './pages/MovieList';
 import Contact from './pages/Contact';
 import AboutUs from './pages/AboutUs';
+import ScrollToTop from './components/ScrollToTop';
 
 const MovieApp = () => {
   return (
     <Router>
+       <ScrollToTop/>
       <div className='box'>
         <Navbar />
         <div>
           {/* <SearchBar/> */}
+         
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<UserLoginPage />} />

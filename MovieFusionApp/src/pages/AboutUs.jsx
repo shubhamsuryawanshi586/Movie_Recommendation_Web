@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutUs = () => {
   return (
-    <div style={{ minHeight: '100vh', marginTop: '3.5rem', backgroundColor: '', marginBottom: "0" }}>
+    <div style={{ minHeight: '100vh', marginTop: '90px', backgroundColor: '', marginBottom: "0" }}>
       <div className="p-3 mt-5">
         {/* Header Section */}
         <div className="container text-center mb-5">

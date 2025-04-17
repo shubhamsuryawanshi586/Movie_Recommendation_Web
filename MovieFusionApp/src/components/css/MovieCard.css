@@ -26,8 +26,12 @@
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 1rem;
+
   }
-  
+    .moviecard .card img:hover {
+      cursor: pointer;
+    }
+
   .moviecard .card-body {
     display: flex;
     flex-direction: column;

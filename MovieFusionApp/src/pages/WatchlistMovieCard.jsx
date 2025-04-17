@@ -3,7 +3,7 @@ import { Link ,useNavigate} from 'react-router-dom';
 import './css/MovieCard.css';
 import TMDB from '../services/TMDB';
 
-const MovieCard = ({ movie}) => {
+const WatchlistMovieCard = ({ movie}) => {
 
   const navigate = useNavigate();
   const [posterUrl, setPosterUrl] = useState('/default-poster.jpg');
@@ -34,4 +34,4 @@ const MovieCard = ({ movie}) => {
   );
 };
 
-export default MovieCard;
+export default WatchlistMovieCard;

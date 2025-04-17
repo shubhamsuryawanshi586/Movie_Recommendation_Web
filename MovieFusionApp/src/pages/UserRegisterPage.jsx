@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../services/AuthService';
+import Swal from 'sweetalert2';
 
 const UserRegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -19,22 +18,35 @@ const UserRegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { ...formData, user_role_id: 1 }; // Assign role ID 1 for User
+    const payload = { ...formData, user_role_id: 1 }; 
     try {
       await AuthService.userRegister(payload);
-      toast.success('Registration successful. Please login.', {
-        onClose: () => navigate('/login'),
-        autoClose: 2000, 
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration successful',
+        position: 'top',
+        width: '300px',
+        toast: true,
+        background: '#ffffff',
+        timer: 1500,
+        text: 'Please login.',
+        willClose: () => navigate('/login'),
       });
+      
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration failed',
+        text: err.response?.data?.message || 'Something went wrong!',
+        position: 'top',
+      });
+      
       console.error(err);
     }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 p-2">
-      <ToastContainer position="top-center" />
       <div
         className="card p-3 shadow-lg"
         style={{
