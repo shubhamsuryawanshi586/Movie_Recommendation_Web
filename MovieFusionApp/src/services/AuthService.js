@@ -7,11 +7,11 @@ class AuthService {
   async userLogin(data) {
     try {
       const response = await axios.post(`${API_BASE}/user/login`, data);
-      if (response.data) {
+      if (response.data && typeof response.data === 'object') {
         localStorage.setItem('user', JSON.stringify(response.data));
         window.dispatchEvent(new Event('userChanged'));
-        window.location.reload(); // Refresh the page
-        window.location.href = '/'; 
+        window.location.reload();
+        window.location.href = '/';
       }
       return response.data;
     } catch (error) {
@@ -19,29 +19,28 @@ class AuthService {
       throw error;
     }
   }
-
+  
   //  Admin login
-async adminLogin(data) {
-  try {
-    const response = await axios.post(`${API_BASE}/admin/login`, data);
-    if (response.data) {
-      const adminData = {
-        ...response.data,
-        user_role_name: 'Admin', // Add user_role_name manually here!
-      };
-      localStorage.setItem('admin', JSON.stringify(adminData));
-      window.dispatchEvent(new Event('userChanged'));
-      window.location.reload(); // Refresh the page
-      window.location.href = '/'; 
-      return adminData;
+  async adminLogin(data) {
+    try {
+      const response = await axios.post(`${API_BASE}/admin/login`, data);
+      if (response.data && typeof response.data === 'object') {
+        const adminData = {
+          ...response.data,
+          user_role_name: 'Admin',
+        };
+        localStorage.setItem('admin', JSON.stringify(adminData));
+        window.dispatchEvent(new Event('userChanged'));
+        window.location.reload();
+        window.location.href = '/';
+        return adminData;
+      }
+      return null;
+    } catch (error) {
+      console.error('Admin login failed:', error);
+      throw error;
     }
-    return null;
-  } catch (error) {
-    console.error('Admin login failed:', error);
-    throw error;
-  }
-}
-
+  }  
 
   // User registration
   async userRegister(data) {
@@ -67,12 +66,30 @@ async adminLogin(data) {
 
   // Get current logged in user or admin
   getCurrentAccount() {
-    const user = localStorage.getItem('user');
-    const admin = localStorage.getItem('admin');
-    if (admin) return JSON.parse(admin);   // Admin has higher priority
-    if (user) return JSON.parse(user);
+    const adminRaw = localStorage.getItem('admin');
+    const userRaw = localStorage.getItem('user');
+
+    // Validate and parse admin
+    if (adminRaw && adminRaw !== "undefined") {
+      try {
+        return JSON.parse(adminRaw);
+      } catch (e) {
+        console.error("Error parsing admin from localStorage:", e);
+      }
+    }
+
+    // Validate and parse user
+    if (userRaw && userRaw !== "undefined") {
+      try {
+        return JSON.parse(userRaw);
+      } catch (e) {
+        console.error("Error parsing user from localStorage:", e);
+      }
+    }
+
     return null;
   }
+
 
   // Logout user or admin
   logout() {
@@ -80,7 +97,7 @@ async adminLogin(data) {
     localStorage.removeItem('admin');
     window.dispatchEvent(new Event('userChanged'));
     window.location.reload(); // Refresh the page
-    window.location.href = '/'; 
+    window.location.href = '/';
   }
 
   // 🛠️ Update current user or admin
