@@ -13,7 +13,7 @@
     font-style: italic;
     font-size: 1.2rem;
   }
-  
+   
   .footermain .card-title {
     font-weight: 600;
     color: #3498db;
@@ -24,7 +24,6 @@
     color: #7f8c8d;
   }
   
-  /* Header Section */
   .footermain header {
     text-align: center;
     margin-top: 90px;

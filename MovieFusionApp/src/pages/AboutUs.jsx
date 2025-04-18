@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <div className="footermain">
       <div className="aboutus-container">
-        {/* Header Section */}
+
         <div className="header-section text-center mb-5">
           <h1 className="heading">About MovieFusionWeb</h1>
           <p className="description">
@@ -14,7 +14,6 @@ const AboutUs = () => {
           </p>
         </div>
 
-        {/* Cards Section */}
         <div className="cards-section">
           <div className="card-item">
             <h5 className="card-title">How It Works</h5>
@@ -36,7 +35,6 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* Quote Section */}
         <div className="quote-section text-center">
           <blockquote className="quote">
             "Movies are a journey — let us help you find the next one you'll never forget."
