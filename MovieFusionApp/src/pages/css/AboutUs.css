@@ -1,0 +1,203 @@
+.footermain {
+    background-color: #f8f9fa;
+  }
+  
+  .footermain h1, .footermain h5 {
+    font-weight: 600;
+  }
+  
+  .footermain blockquote {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-left: 5px solid #3498db;
+    font-style: italic;
+    font-size: 1.2rem;
+  }
+  
+  .footermain .card-title {
+    font-weight: 600;
+    color: #3498db;
+  }
+  
+  .footermain .card-text {
+    font-size: 1rem;
+    color: #7f8c8d;
+  }
+  
+  /* Header Section */
+  .footermain header {
+    text-align: center;
+    margin-top: 90px;
+  }
+  
+  .footermain header h1 {
+    color: #2c3e50;
+  }
+  
+  .footermain header .lead {
+    font-size: 1.2rem;
+    color: #34495e;
+    line-height: 1.8;
+  }
+  
+  /* Cards Section */
+  .footermain .card {
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    border-radius: 10px;
+  }
+  
+  .footermain .card-body {
+    padding: 20px;
+  }
+  
+  .footermain .card-title {
+    font-weight: 600;
+    color: #3498db;
+  }
+  
+  .footermain .card-text {
+    font-size: 1rem;
+    color: #7f8c8d;
+  }
+  
+  /* Quote Section */
+  .footermain blockquote {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-left: 5px solid #3498db;
+    font-size: 1.2rem;
+    color: #2c3e50;
+  }
+  
+  /* Spacing and Layout Adjustments */
+  .footermain .container {
+    padding: 20px;
+  }
+  
+  .footermain .mt-4, .footermain .mt-5 {
+    margin-top: 2rem;
+  }
+  
+  .footermain .mb-4, .footermain .mb-5 {
+    margin-bottom: 2rem;
+  }
+  
+  .footermain .text-center {
+    text-align: center;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footermain .container {
+      padding: 10px;
+    }
+  
+    .footermain .card-body {
+      padding: 15px;
+    }
+  
+    .footermain .card-title {
+      font-size: 1.1rem;
+    }
+  
+    .footermain .card-text {
+      font-size: 0.9rem;
+    }
+  }
+/* General Styles for the footermain class */
+.footermain {
+    background-color: #f5f5f5;
+    padding: 50px 20px;
+  }
+  
+  .aboutus-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .header-section {
+    margin-bottom: 50px;
+  }
+  
+  .heading {
+    font-size: 3rem;
+    color: #2d3e50;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .description {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .cards-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .card-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    color: #3498db;
+    margin-bottom: 15px;
+  }
+  
+  .card-description {
+    color: #7f8c8d;
+    font-size: 1rem;
+  }
+  
+  .quote-section {
+    margin-top: 30px;
+  }
+  
+  .quote {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #2d3e50;
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-left: 5px solid #3498db;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .cards-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card-item {
+      width: 80%;
+      margin-bottom: 20px;
+    }
+  
+    .heading {
+      font-size: 2.5rem;
+    }
+  
+    .description {
+      font-size: 1rem;
+    }
+  
+    .quote {
+      font-size: 1.2rem;
+    }
+  }
+    
