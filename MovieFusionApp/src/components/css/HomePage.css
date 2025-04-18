@@ -1,209 +1,126 @@
-/* Homepage Container */
 .homepage {
-  min-height: 100vh;
-  text-align: center;
-  padding: 20px;
+  background-color: #f4f4f4;
+  padding: 30px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-
-/* Section Title */
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: #222;
-  font-weight: bold;
-}
-
-
-/* Genre List */
-.genre-list {
+.genre-tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin-top: 40px;
   justify-content: center;
-}
-
-
-.genre-list li {
-  cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 15px;
-  background-color: rgb(16, 16, 16);
-  color: white;
-  border: none;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-
-.genre-list li.active {
-  background-color: rgb(255, 174, 0);
-  color: black;
-}
-
-
-.genre-list li:hover {
-  background-color: rgb(240, 240, 240);
-  color: black;
-}
-
-
-/* Slider Wrapper */
-.slider-container {
-  position: relative;
-  max-width: 1350px;
-  margin: 0 auto;
-}
-
-
-/* Scroll Buttons */
-.scroll-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-
-.scroll-button.left {
-  left: 10px;
-}
-
-
-.scroll-button.right {
-  right: 10px;
-}
-
-
-/* Slider */
-.slider {
-  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
   overflow-x: auto;
+  margin-top: 2px;
+}
+
+.genre-tab {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 16px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.genre-tab.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.genre-tab:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.see-more-btn {
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.see-more-btn:hover {
+  color: #28a745;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  padding: 10px 0;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  /* margin-top: 2.5rem; */
+  transition: grid-template-columns 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-
-.slider::-webkit-scrollbar {
-  display: none;
-}
-
-
-/* Slide Card */
-.slide {
-  flex: 0 0 auto;
-  width: 250px;
-  scroll-snap-align: start;
+.movie-item {
   position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  transition: transform 0.3s;
 }
 
-
-.slide:hover .poster-image {
-  transform: scale(1.05);
-}
-
-
-/* Poster Container */
 .poster-container {
   position: relative;
   width: 100%;
-  min-height: 100px;
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .poster-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
+  cursor: pointer;
   transition: transform 0.3s ease;
+  border-radius: 8px;
 }
 
 .poster-image:hover {
-  cursor: pointer;
+  transform: scale(1.05);
 }
-/* Overlay on Poster */
-.overlay {
+
+.poster-overlay {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
-  color: #fff;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
   padding: 10px;
-  text-align: center;
-  border-radius: 0 0 15px 15px;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-
-/* Movie Title */
-.movie-title {
-  font-size: 1rem;
-  margin: 5px 0 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.poster-container:hover .poster-overlay {
+  opacity: 1;
 }
 
-
-/* Movie Rating */
-.movie-rating {
-  font-size: 0.9rem;
-  margin-top: 5px;
+.show-limited .movie-list {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
+.show-all .movie-list {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
 
-/* Responsive Design */
 @media (max-width: 768px) {
-  .slide {
-    min-width: 160px;
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    width: 100%;
+    box-sizing: border-box;
   }
 
-
-  .section-title {
-    font-size: 2rem;
-  }
-}
-
-
-@media (max-width: 480px) {
-  .slide {
-    min-width: 140px;
-  }
-
-
-  .poster-container {
-    min-height: 220px;
-  }
-
-
-  .section-title {
-    font-size: 1.8rem;
+  body {
+    overflow-x: hidden;
   }
 }
-
-
-
-
-

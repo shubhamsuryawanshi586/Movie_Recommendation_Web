@@ -1,5 +1,3 @@
-// src/services/MovieService.js
-
 import axios from 'axios';
 
 const API_BASE = 'http://localhost:8080/movie';
@@ -34,6 +32,13 @@ class MovieService {
        return axios.get(`${API_BASE}/category/${genrename}`);
       };
 
+    getAllGenres(){
+        return axios.get(`${API_BASE}/getallgenres`)
+    }
+
+    getMoviesByLanguage(){
+        return axios.get(`${API_BASE}/getmoviesbylanguage`)
+   } 
 
 }
 
