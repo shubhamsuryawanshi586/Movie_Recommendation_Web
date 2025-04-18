@@ -24,7 +24,7 @@ const AdminLoginPage = () => {
       await Swal.fire({
         icon: 'success',
         title: 'Login Successful!',
-        text: 'Welcome back, Admin!',
+        text: 'Welcome to Movie Fusion, Admin!',
         timer: 1500,
         showConfirmButton: false,
         position: 'top', 
@@ -41,6 +41,8 @@ const AdminLoginPage = () => {
         icon: 'error',
         title: 'Login Failed',
         text: 'Please check your email and password.',
+        showConfirmButton: false,
+        timer: 1500,
         position: 'top', 
         width: '300px', 
         padding: '10px',

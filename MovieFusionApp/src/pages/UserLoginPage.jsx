@@ -34,17 +34,20 @@ const UserLoginPage = () => {
       });
 
       navigate('/'); 
+      window.location.reload();
     } catch (err) {
       console.error('Login error:', err); 
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
-        text: err.message || 'Please check your email and password.',
+        text: 'Please check your email and password.',
+        timer: 1500,
         position: 'top',
         width: '300px',
         padding: '10px',
         toast: true,
         background: '#ffffff',
+        showConfirmButton: false,
       });
     }
   };

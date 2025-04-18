@@ -3,7 +3,7 @@ import UserService from '../services/UserService';
 import AuthService from '../services/AuthService';
 import './css/ProfilePage.css';
 import { Spinner, Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // ✅ added
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const [profile, setProfile] = useState({ username: '', email: '' });
@@ -12,7 +12,7 @@ const UserProfilePage = () => {
   const [formData, setFormData] = useState({ username: '', email: '' });
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const navigate = useNavigate(); // ✅ added
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchProfile();

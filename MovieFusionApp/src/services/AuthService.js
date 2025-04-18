@@ -10,8 +10,6 @@ class AuthService {
       if (response.data && typeof response.data === 'object') {
         localStorage.setItem('user', JSON.stringify(response.data));
         window.dispatchEvent(new Event('userChanged'));
-        window.location.reload();
-        window.location.href = '/';
       }
       return response.data;
     } catch (error) {
@@ -31,8 +29,6 @@ class AuthService {
         };
         localStorage.setItem('admin', JSON.stringify(adminData));
         window.dispatchEvent(new Event('userChanged'));
-        window.location.reload();
-        window.location.href = '/';
         return adminData;
       }
       return null;
