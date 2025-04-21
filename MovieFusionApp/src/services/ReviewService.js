@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:8080/rating';
+const API_BASE = 'http://localhost:8080/review';
 
-class RatingService {
+class ReviewService {
 
-  addToWatchlist(userId, movieId) {
-    return axios.post(`${API_BASE}/addRating/${userId}/${movieId}`);
+  addReview(data) {
+    return axios.post(`${API_BASE}/addreview`, data);
   }
 }
 
-export default new RatingService();
+export default new ReviewService();

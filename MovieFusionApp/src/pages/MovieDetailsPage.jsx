@@ -83,8 +83,11 @@ const MovieDetailsPage = () => {
   };
 
   const handleRateClick = () => {
-    if (isUserLoggedIn) navigate(`/movie/${movie.movie_id}/rating`);
-    else showLoginAlert('rate');
+    if (isUserLoggedIn) {
+      navigate(`/movie/${movie.movie_id}/rating`);
+    }
+    else
+      showLoginAlert('rate');
   };
 
   const showLoginAlert = (action) => {
@@ -99,7 +102,7 @@ const MovieDetailsPage = () => {
     });
   };
 
-  const handleClose = () => navigate(-1);
+  const handleClose = () => navigate(`/movies`);
 
   return (
     <div className="movie-details-page">
@@ -115,7 +118,7 @@ const MovieDetailsPage = () => {
           {/* Poster */}
           <div className="movie-poster">
             <img src={posterUrl} alt={`${movie.movie_title} Poster`}
-              style={{ opacity: posterUrl === '/default-poster.jpg' ? 0.5 : 1 }}/>
+              style={{ opacity: posterUrl === '/default-poster.jpg' ? 0.5 : 1 }} />
           </div>
 
           {/* Details */}
@@ -127,6 +130,8 @@ const MovieDetailsPage = () => {
               <p><strong>Category:</strong> {movie.movie_category}</p>
               <p><strong>Type:</strong> {movie.movie_type}</p>
               <p><strong>Language:</strong> {movie.movie_language}</p>
+            
+              {/* {userRating && <p>Your Rating: {userRating} ★</p>} */}
             </div>
 
             {/* Action Buttons */}
@@ -135,6 +140,7 @@ const MovieDetailsPage = () => {
               <a className="btn btn-success" href={movie.watch_link} target="_blank" rel="noreferrer">Watch</a>
               <button className="btn btn-warning" onClick={handleAddToWatchlist}>Add to Watchlist</button>
               <button className="btn btn-outline-success" onClick={handleReviewClick}>Review</button>
+              
               <button className="btn btn-outline-info" onClick={handleRateClick}>Rate</button>
             </div>
           </div>

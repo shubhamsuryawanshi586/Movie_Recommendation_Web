@@ -1,19 +1,40 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
 import './css/MovieReview.css';
+import ReviewService from '../services/ReviewService';
 
 const MovieReview = () => {
+
   const [reviewText, setReviewText] = useState('');
   const navigate = useNavigate(); 
+  const { id } = useParams();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+  
     if (reviewText.trim()) {
-      setReviewText('');
+      const user = JSON.parse(localStorage.getItem('user'));
+      const uid = user?.user_id;
+  
+      const data = {
+        user_id: uid,
+        movie_id: id,
+        review_text: reviewText
+      };
+  
+      ReviewService.addReview(data)
+        .then(response => {
+          console.log('Review added successfully:', response.data);
+        })
+        .catch(error => {
+          console.error('Error adding review:', error);
+        });
     }
   };
+  
 
   const handleClose = () => {
-    navigate('/movies'); 
+    navigate(`/movie/${id}`); 
   };
 
   return (
