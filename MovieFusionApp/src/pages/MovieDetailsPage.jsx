@@ -19,13 +19,13 @@ const MovieDetailsPage = () => {
 
   useEffect(() => {
     const fetchPoster = async () => {
-      if (movie.movie_title) {
-        const url = await TMDB.fetchMoviePosterByTitle(movie.movie_title);
+      if (movie.original_movie_id) {
+        const url = await TMDB.fetchMoviePosterById(movie.original_movie_id);
         setPosterUrl(url);
       }
     };
     fetchPoster();
-  }, [movie.movie_title]);
+  }, [movie.original_movie_id]);
 
   useEffect(() => {
     const userString = localStorage.getItem('user');
@@ -128,7 +128,7 @@ const MovieDetailsPage = () => {
               <p><strong>Actors:</strong> {movie.movie_actor1}, {movie.movie_actor2}, {movie.movie_actor3}</p>
               <p className='movie-description'><strong>Description:</strong> {movie.movie_description}</p>
               <p><strong>Category:</strong> {movie.movie_category}</p>
-              <p><strong>Type:</strong> {movie.movie_type}</p>
+              {/* <p><strong>Type:</strong> {movie.movie_type}</p> */}
               <p><strong>Language:</strong> {movie.movie_language}</p>
             
               {/* {userRating && <p>Your Rating: {userRating} ★</p>} */}

@@ -126,7 +126,8 @@ const Navbar = () => {
                           value={query}
                           onChange={(e) => setQuery(e.target.value.trimStart())}
                         />
-                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0); }} className="btn btn-primary" type="submit">Search</button>
+                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0);}} className="btn btn-primary" type="submit">Search</button>
+                        
                       </form>
                     </div>
                   </div>

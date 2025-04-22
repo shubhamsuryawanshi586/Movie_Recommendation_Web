@@ -46,12 +46,12 @@ const HomePage = () => {
     const fetchPosters = async () => {
       const urls = {};
       for (const movie of movies) {
-        if (!urls[movie.movie_title]) {  // Fetch only if not already fetched
+        if (!urls[movie.original_movie_id]) {  // Fetch only if not already fetched
           try {
-            const url = await TMDB.fetchMoviePosterByTitle(movie.movie_title);
-            urls[movie.movie_title] = url;
+            const url = await TMDB.fetchMoviePosterById(movie.original_movie_id);
+            urls[movie.original_movie_id] = url;
           } catch (error) {
-            urls[movie.movie_title] = '/default-poster.jpg';
+            urls[movie.original_movie_id] = '/default-poster.jpg';
           }
         }
       }
@@ -96,7 +96,7 @@ const HomePage = () => {
               <img
                 className="poster-image"
                 onClick={() => navigate(`/movie/${movie.movie_id}`)} // Navigate to movie details page
-                src={posterUrls[movie.movie_title] || '/default-poster.jpg'}
+                src={posterUrls[movie.original_movie_id] || '/default-poster.jpg'}
                 alt={movie.movie_title}
                 title={movie.movie_title}
               />

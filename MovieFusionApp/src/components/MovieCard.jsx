@@ -10,12 +10,12 @@ const MovieCard = ({ movie}) => {
  
   useEffect(() => {
     const fetchPoster = async () => {
-      const url = await TMDB.fetchMoviePosterByTitle(movie.movie_title);
+      const url = await TMDB.fetchMoviePosterById(movie.original_movie_id);
       setPosterUrl(url);
     };
 
     fetchPoster();
-  }, [movie.movie_title]);
+  }, [movie.original_movie_id]);
 
   return (
     <div className='moviecard'>
