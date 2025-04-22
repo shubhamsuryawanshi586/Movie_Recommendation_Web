@@ -1,17 +1,87 @@
- .landingpage
- {
-   min-height: 100vh;
-  /* margin-top: 3rem; */
- }
- 
- .landingpage .container {
-    background: white;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.landingpage {
+  background-color: #f8f9fa;
+  padding-top: 60px;
+  /* padding-bottom: 10px; */
+}
+
+.container {
+  width: 100%;
+}
+
+.moviesbox {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.moviesbox h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.movie-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #007bff;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.page-item.disabled .page-link {
+  color: #ccc;
+  pointer-events: none;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+}
+
+@media (max-width: 767px) {
+  .moviesbox {
+    padding: 15px;
   }
 
-  .moviesbox .row
-  {
-    min-height: 600px;
+  .movie-card {
+    margin-bottom: 15px;
   }
+}
+
+@media (max-width: 576px) {
+  .moviesbox h2 {
+    font-size: 1.8rem;
+  }
+
+  .page-link {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

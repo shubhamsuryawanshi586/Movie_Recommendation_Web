@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import MovieService from '../services/MovieService.js';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
-// import SearchBar from '../components/SearchBar';
+import './css/SearchResultPage.css';
 
 const SearchResultsPage = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [params] = useSearchParams();
 
+  const query = params.get('q');
+
   useEffect(() => {
-    const query = params.get('q');
     if (query) {
       setLoading(true);
       MovieService.searchMovies(query)
@@ -18,16 +19,17 @@ const SearchResultsPage = () => {
         .catch(error => console.error('Error fetching search results:', error))
         .finally(() => setLoading(false));
     }
-  }, [params]);
+  }, [query]);
 
   return (
-    <div className='searchresultpage' style={{marginTop:'100px', minHeight:'73vh'}}>
-      {/* <SearchBar/> */}
-      <div className="container my-4">
-        {/* <h2 className="mb-4 text-center">Search Results</h2>  */}
+    <div className='searchresultpage' style={{ marginTop: '90px', minHeight: '73vh' }}>
+      <div className="container my-5">
+        <h2 className="text-center mb-4">
+          {query ? `Search Results for "${query}"` : 'Search Movies'}
+        </h2>
 
         {loading ? (
-          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100px" }}>
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
@@ -35,16 +37,17 @@ const SearchResultsPage = () => {
         ) : (
           <>
             {movies.length === 0 ? (
-              <p className="text-center">No movies found matching your search.</p>
+              <div className="text-center mt-4">
+                <h5 className="text-muted">No movies found matching your search.</h5>
+              </div>
             ) : (
-              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
+              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                 {movies.map(movie => (
                   <div className="col d-flex justify-content-center" key={movie.movie_id}>
                     <MovieCard movie={movie} showReviewButton={true} />
                   </div>
                 ))}
               </div>
-
             )}
           </>
         )}

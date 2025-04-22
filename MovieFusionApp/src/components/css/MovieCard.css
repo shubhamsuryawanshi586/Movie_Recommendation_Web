@@ -1,67 +1,64 @@
-.moviecard {
-    padding: 1rem;
-    flex: 1 1 300px;
-    max-width: 350px;
-  }
-  
-  .moviecard .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background-color: #ffffff;
-    transition: transform 0.3s;
-  }
-/*   
-  .card:hover {
-    transform: translateY(-5px);
-  } */
-  
-  .moviecard .card img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+.movie-item {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* Adjust max-width for larger screens */
+  margin: auto;
+}
 
-  }
-    .moviecard .card img:hover {
-      cursor: pointer;
-    }
+.poster-container {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .moviecard .card-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 1rem;
+.poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+}
+
+.poster-image:hover {
+  transform: scale(1.05);
+}
+
+.poster-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.poster-container:hover .poster-overlay {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    max-width: 100%; /* Ensure full width on smaller screens */
   }
-  
-  .moviecard .card-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 769px) {
+  .movie-item {
+    max-width: 250px; /* Slightly smaller card size for larger screens */
   }
-  
-  .moviecard .card-text {
-    flex-grow: 1;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 1200px) {
+  .movie-item {
+    max-width: 280px; /* Adjust max-width for even larger screens */
   }
-  
-  .moviecard .card-body p {
-    font-size: 0.85rem;
-  }
-  
-  .moviecard .card-body .btn {
-    margin-top: 0.5rem;
-  }
-  
-  /* Responsive Layout */
-  @media (max-width: 768px) {
-    .moviecard {
-      max-width: 100%;
-    }
-  }
-  
+}

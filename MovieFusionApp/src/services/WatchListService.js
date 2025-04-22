@@ -11,6 +11,10 @@ class WatchListService {
   getWatchlist(userId) {
     return axios.get(`${API_BASE}/allWatchlist/${userId}`)
   }
+
+  removeMovieFromWatchlist(userId, movieId){
+    return axios.delete(`${API_BASE}/removemoviefromwatchlist/${userId}/${movieId}`);
+  }
 }
 
 export default new WatchListService();

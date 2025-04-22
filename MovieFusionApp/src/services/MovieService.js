@@ -40,6 +40,14 @@ class MovieService {
         return axios.get(`${API_BASE}/getmoviesbylanguage`)
    } 
 
+   getMovieCountByLanguage(){
+    return axios.get(`${API_BASE}/getmoviecountbylanguage`)
+   }
+
+   getMoviesByLanguageAndGenre(language, genrename){
+    return axios.get(`${API_BASE}/getmoviesbylangaugewithgenre/${language}/${genrename}`);
+   }
+
 }
 
 export default new MovieService();

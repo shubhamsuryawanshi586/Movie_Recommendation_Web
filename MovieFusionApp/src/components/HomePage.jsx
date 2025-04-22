@@ -8,45 +8,63 @@ const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState('Action');
+  const [selectedLanguage, setSelectedLanguage] = useState('Hindi');
   const [posterUrls, setPosterUrls] = useState({});
   const [showMore, setShowMore] = useState(false);
+  const [languages, setLanguages] = useState([]);
   const navigate = useNavigate();
-  
-  useEffect(() =>{
+
+  // Fetching languages
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      try {
+        const res = await MovieService.getMovieCountByLanguage();
+        setLanguages(res.data);
+      } catch (error) {
+        console.error('Error fetching languages', error);
+      }
+    };
+    fetchLanguages();
+  }, []);
+
+  // Fetching genres
+  useEffect(() => {
     const fetchGenres = async () => {
-      try{
+      try {
         const res = await MovieService.getAllGenres();
         setGenres(res.data);
-        // if(res.data.length > 0){
-        //   selectedGenre(res.data[0]);
-        // }
-      }catch(error){
+      } catch (error) {
         console.error('Error fetching genres', error);
       }
     };
     fetchGenres();
   }, []);
 
+  // Fetch movies based on selected language and genre
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await MovieService.getMoviesByGenre(selectedGenre);
-        const newMovies = res.data.movies || res.data;
-        setMovies(newMovies);
+        if (selectedLanguage && selectedGenre) {
+          const res = await MovieService.getMoviesByLanguageAndGenre(selectedLanguage, selectedGenre);
+          setMovies(res.data.movies || res.data);
+        } else {
+          // If no language or genre is selected, you can choose to show some default movies
+          setMovies([]);
+        }
       } catch (err) {
         console.error('Error fetching movies', err);
       }
     };
-  
-    fetchMovies();
-  }, [selectedGenre]);
 
-  
+    fetchMovies();
+  }, [selectedLanguage, selectedGenre]);
+
+  // Fetch movie posters
   useEffect(() => {
     const fetchPosters = async () => {
       const urls = {};
       for (const movie of movies) {
-        if (!urls[movie.original_movie_id]) {  // Fetch only if not already fetched
+        if (!urls[movie.original_movie_id]) {
           try {
             const url = await TMDB.fetchMoviePosterById(movie.original_movie_id);
             urls[movie.original_movie_id] = url;
@@ -61,53 +79,74 @@ const HomePage = () => {
     if (movies.length > 0) {
       fetchPosters();
     }
-  }, [movies]); 
+  }, [movies]);
 
   return (
     <div className='homepage'>
       <div className="container-fluid homepage py-4">
- 
-      <div className="genre-tabs">
-        {genres.map((genre) => (
+
+        {/* Language Cards */}
+        <div className="language-cards-container">
+          {languages.map((language) => (
+            <div key={language.movie_language} className="language-card">
+              <button
+                 className={`language-btn ${selectedLanguage === language.movie_language ? 'active' : ''}`} 
+                onClick={() => setSelectedLanguage(language.movie_language)}  // Set selected language
+              >
+                <div className="card-content">
+                  <h5>{language.movie_language}</h5>  {/* Language Name */}
+                  <p>{language.movie_count} Movies</p>  {/* Language Count */}
+                </div>
+              </button>
+            </div>
+          ))}
+        </div>
+
+
+        {/* Genre Selection */}
+        <div className="genre-tabs">
+          {genres.map((genre) => (
+            <button
+              key={genre}
+              className={`genre-tab ${selectedGenre === genre ? 'active' : ''}`}
+              onClick={() => setSelectedGenre(genre)}  // Set selected genre
+            >
+              {genre}
+            </button>
+          ))}
+        </div>
+
+        {/* "See More" Button */}
+        <div className="button-container">
           <button
-            key={genre}
-            className={`genre-tab ${selectedGenre === genre ? 'active' : ''}`}
-            onClick={() => setSelectedGenre(genre)} 
+            className="see-more-btn"
+            onClick={() => setShowMore(!showMore)}
           >
-            {genre}
+            {showMore ? 'Show Less' : 'See more..'}
           </button>
-        ))}
-      </div>
+        </div>
 
-      <div className='button-container'>
-      <button
-        className="see-more-btn"
-        onClick={() => setShowMore(!showMore)} 
-      >
-        {showMore ? 'Show Less' : 'See more..'}
-      </button>
-      </div>
-
-      {/* Movie Display */}
-      <div className={`movie-list ${showMore ? 'show-all' : 'show-limited'}`}>
-        {movies.slice(0, showMore ? movies.length : 5).map((movie) => (
-          <div key={movie.id} className="movie-item">
-            <div className="poster-container">
-              <img
-                className="poster-image"
-                onClick={() => navigate(`/movie/${movie.movie_id}`)} // Navigate to movie details page
-                src={posterUrls[movie.original_movie_id] || '/default-poster.jpg'}
-                alt={movie.movie_title}
-                title={movie.movie_title}
-              />
-              <div className="poster-overlay">
-                <p>{movie.movie_title}</p>
+        {/* Movie Display */}
+        <div className={`movie-list ${showMore ? 'show-all' : 'show-limited'}`}>
+          {movies.slice(0, showMore ? movies.length : 5).map((movie) => (
+            <div key={movie.id} className="movie-item">
+              <div className="poster-container">
+                <img
+                  className="poster-image"
+                  onClick={() => navigate(`/movie/${movie.movie_id}`)} // Navigate to movie details page
+                  src={posterUrls[movie.original_movie_id] || '/default-poster.jpg'}
+                  alt={movie.movie_title}
+                  title={movie.movie_title}
+                />
+                <div className="poster-overlay">
+                  <p>{movie.movie_title}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
       </div>
-    </div>
     </div>
   );
 };

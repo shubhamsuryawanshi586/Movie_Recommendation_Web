@@ -66,8 +66,13 @@ const Navbar = () => {
       <nav ref={navRef} className="main-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 " >
         <div className="container-fluid" >
           {/* Brand */}
-          <Link className="navbar-brand" to="/" onClick={closeNavbar}><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion
+          {/* <Link className="navbar-brand" to="/" onClick={closeNavbar}><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion
+          </Link> */}
+          <Link className="navbar-brand d-flex align-items-center gap-2" to="/" onClick={closeNavbar}>
+            <img src="/images/tv.png" alt="Movie Fusion Logo" style={{ height: '20px' }} />
+            <span><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion</span>
           </Link>
+
 
           {/* Toggle button for mobile */}
           <button
@@ -126,8 +131,8 @@ const Navbar = () => {
                           value={query}
                           onChange={(e) => setQuery(e.target.value.trimStart())}
                         />
-                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0);}} className="btn btn-primary" type="submit">Search</button>
-                        
+                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0); }} className="btn btn-primary" type="submit">Search</button>
+
                       </form>
                     </div>
                   </div>

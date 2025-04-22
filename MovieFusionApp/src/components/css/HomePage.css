@@ -5,6 +5,60 @@
   overflow-x: hidden;
 }
 
+
+.language-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.language-card {
+  width: 200px;  /* Adjust width as needed */
+  margin-bottom: 20px;
+}
+
+.language-btn {
+  width: 100%;
+  padding: 20px;
+  background-color: #f5f5f5;  /* Default background color */
+  border: 2px solid #ddd;  /* Border for the button */
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.language-btn:hover {
+  background-color: #007bff;  /* Hover background color */
+  color: white;  /* Change text color on hover */
+  transform: scale(1.05);  /* Slight scale effect on hover */
+}
+
+.language-btn.active {
+  background-color: #007bff;  /* Active background color */
+  color: white;  /* Active text color */
+  border-color: #0056b3;  /* Border color when active */
+}
+
+.language-btn h5 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.language-btn p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.language-btn.active h5, .language-btn.active p {
+  color: white;  /* Ensure text stays white when active */
+}
+
+
 .genre-tabs {
   display: flex;
   justify-content: center;
