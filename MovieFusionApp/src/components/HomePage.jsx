@@ -14,7 +14,6 @@ const HomePage = () => {
   const [languages, setLanguages] = useState([]);
   const navigate = useNavigate();
 
-  // Fetching languages
   useEffect(() => {
     const fetchLanguages = async () => {
       try {
@@ -27,7 +26,7 @@ const HomePage = () => {
     fetchLanguages();
   }, []);
 
-  // Fetching genres
+  
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -40,7 +39,6 @@ const HomePage = () => {
     fetchGenres();
   }, []);
 
-  // Fetch movies based on selected language and genre
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -48,7 +46,7 @@ const HomePage = () => {
           const res = await MovieService.getMoviesByLanguageAndGenre(selectedLanguage, selectedGenre);
           setMovies(res.data.movies || res.data);
         } else {
-          // If no language or genre is selected, you can choose to show some default movies
+         
           setMovies([]);
         }
       } catch (err) {
@@ -85,17 +83,17 @@ const HomePage = () => {
     <div className='homepage'>
       <div className="container-fluid homepage py-4">
 
-        {/* Language Cards */}
+       
         <div className="language-cards-container">
           {languages.map((language) => (
             <div key={language.movie_language} className="language-card">
               <button
                  className={`language-btn ${selectedLanguage === language.movie_language ? 'active' : ''}`} 
-                onClick={() => setSelectedLanguage(language.movie_language)}  // Set selected language
+                onClick={() => setSelectedLanguage(language.movie_language)}  
               >
                 <div className="card-content">
-                  <h5>{language.movie_language}</h5>  {/* Language Name */}
-                  <p>{language.movie_count} Movies</p>  {/* Language Count */}
+                  <h5>{language.movie_language}</h5>  
+                  <p>{language.movie_count} Movies</p>  
                 </div>
               </button>
             </div>

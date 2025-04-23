@@ -14,15 +14,15 @@
 }
 
 .language-card {
-  width: 200px;  /* Adjust width as needed */
+  width: 200px;  
   margin-bottom: 20px;
 }
 
 .language-btn {
   width: 100%;
   padding: 20px;
-  background-color: #f5f5f5;  /* Default background color */
-  border: 2px solid #ddd;  /* Border for the button */
+  background-color: #f5f5f5;  
+  border: 2px solid #ddd;  
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
@@ -31,15 +31,15 @@
 }
 
 .language-btn:hover {
-  background-color: #007bff;  /* Hover background color */
-  color: white;  /* Change text color on hover */
-  transform: scale(1.05);  /* Slight scale effect on hover */
+  background-color: #007bff;  
+  color: white;  
+  transform: scale(1.05);  
 }
 
 .language-btn.active {
-  background-color: #007bff;  /* Active background color */
-  color: white;  /* Active text color */
-  border-color: #0056b3;  /* Border color when active */
+  background-color: #007bff;  
+  color: white;  
+  border-color: #0056b3;  
 }
 
 .language-btn h5 {
@@ -51,11 +51,11 @@
 .language-btn p {
   margin: 5px 0 0;
   font-size: 14px;
-  color: #666;
+  font-weight: bold;
 }
 
 .language-btn.active h5, .language-btn.active p {
-  color: white;  /* Ensure text stays white when active */
+  color: white;  
 }
 
 

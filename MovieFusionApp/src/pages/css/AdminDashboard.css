@@ -1,21 +1,45 @@
-.admindashboard
-{
-    min-height: 81vh;
+.admindashboard {
+  min-height: 81vh;
+  background-color: #f8f9fa;
 }
 
 .admindashboard .container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
 
-  
+.admindashboard table th,
+.admindashboard table td {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.admindashboard .table {
+    font-size: 14px; 
+}
+
+.admindashboard .btn {
+    font-size: 14px; 
+    padding: 10px 30px;
+
+}
 
 
 @media (max-width: 576px) {
-    .admindashboard table th,
-    .admindashboard table td {
-      font-size: 14px;
-    }
+  .admindashboard table th,
+  .admindashboard table td {
+      font-size: 11px;
   }
-  
+
+  .admindashboard .table {
+      font-size: 12px; 
+  }
+
+  .admindashboard .btn {
+      font-size: 11px; 
+      padding: 10px 8px;
+  }
+
+}
