@@ -128,7 +128,7 @@ const MovieDetailsPage = () => {
               <p><strong>Actors:</strong> {movie.movie_actor1}, {movie.movie_actor2}, {movie.movie_actor3}</p>
               <p className='movie-description'><strong>Description:</strong> {movie.movie_description}</p>
               <p><strong>Category:</strong> {movie.movie_category}</p>
-              {/* <p><strong>Type:</strong> {movie.movie_type}</p> */}
+              <p><strong>Duration:</strong> {movie.movie_duration}</p> 
               <p><strong>Language:</strong> {movie.movie_language}</p>
             
               {/* {userRating && <p>Your Rating: {userRating} ★</p>} */}
