@@ -36,6 +36,11 @@ class MovieService {
         return axios.get(`${API_BASE}/getallgenres`)
     }
 
+    
+    getAllGenresByLanguage(selectedLanguage){
+        return axios.get(`${API_BASE}/getallgenresbylanguage/${selectedLanguage}`)
+    }
+
     getMoviesByLanguage(){
         return axios.get(`${API_BASE}/getmoviesbylanguage`)
    } 

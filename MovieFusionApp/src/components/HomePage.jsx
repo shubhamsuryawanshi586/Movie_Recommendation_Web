@@ -26,38 +26,38 @@ const HomePage = () => {
     fetchLanguages();
   }, []);
 
-  
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const res = await MovieService.getAllGenres();
+        const res = await MovieService.getAllGenresByLanguage(selectedLanguage);
         setGenres(res.data);
       } catch (error) {
         console.error('Error fetching genres', error);
       }
     };
     fetchGenres();
-  }, []);
+  }, [selectedLanguage]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         if (selectedLanguage && selectedGenre) {
           const res = await MovieService.getMoviesByLanguageAndGenre(selectedLanguage, selectedGenre);
-          setMovies(res.data.movies || res.data);
+          console.log('Fetched movies:', res.data);
+          const data = res.data.movies || res.data;
+          setMovies(Array.isArray(data) ? data : []);
         } else {
-         
           setMovies([]);
         }
       } catch (err) {
         console.error('Error fetching movies', err);
+        setMovies([]);
       }
     };
 
     fetchMovies();
   }, [selectedLanguage, selectedGenre]);
 
-  // Fetch movie posters
   useEffect(() => {
     const fetchPosters = async () => {
       const urls = {};
@@ -74,7 +74,7 @@ const HomePage = () => {
       setPosterUrls(urls);
     };
 
-    if (movies.length > 0) {
+    if (Array.isArray(movies) && movies.length > 0) {
       fetchPosters();
     }
   }, [movies]);
@@ -83,12 +83,11 @@ const HomePage = () => {
     <div className='homepage'>
       <div className="container-fluid homepage py-4">
 
-       
         <div className="language-cards-container">
           {languages.map((language) => (
             <div key={language.movie_language} className="language-card">
               <button
-                 className={`language-btn ${selectedLanguage === language.movie_language ? 'active' : ''}`} 
+                className={`language-btn ${selectedLanguage === language.movie_language ? 'active' : ''}`} 
                 onClick={() => setSelectedLanguage(language.movie_language)}  
               >
                 <div className="card-content">
@@ -100,21 +99,18 @@ const HomePage = () => {
           ))}
         </div>
 
-
-        {/* Genre Selection */}
         <div className="genre-tabs">
           {genres.map((genre) => (
             <button
               key={genre}
               className={`genre-tab ${selectedGenre === genre ? 'active' : ''}`}
-              onClick={() => setSelectedGenre(genre)}  // Set selected genre
+              onClick={() => setSelectedGenre(genre)}  
             >
               {genre}
             </button>
           ))}
         </div>
 
-        {/* "See More" Button */}
         <div className="button-container">
           <button
             className="see-more-btn"
@@ -124,14 +120,13 @@ const HomePage = () => {
           </button>
         </div>
 
-        {/* Movie Display */}
         <div className={`movie-list ${showMore ? 'show-all' : 'show-limited'}`}>
-          {movies.slice(0, showMore ? movies.length : 5).map((movie) => (
+          {Array.isArray(movies) && movies.slice(0, showMore ? movies.length : 5).map((movie) => (
             <div key={movie.id} className="movie-item">
               <div className="poster-container">
                 <img
                   className="poster-image"
-                  onClick={() => navigate(`/movie/${movie.movie_id}`)} // Navigate to movie details page
+                  onClick={() => navigate(`/movie/${movie.movie_id}`)}
                   src={posterUrls[movie.original_movie_id] || '/default-poster.jpg'}
                   alt={movie.movie_title}
                   title={movie.movie_title}
