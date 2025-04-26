@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <div className='main'>
       <nav ref={navRef} className="main-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3 " >
-        <div className="container-fluid" >
+        <div className="container-fluid " >
           {/* Brand */}
           {/* <Link className="navbar-brand" to="/" onClick={closeNavbar}><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion
           </Link> */}
@@ -90,7 +90,7 @@ const Navbar = () => {
           {/* Navbar Content */}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <div className='mx-auto'>
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/" onClick={closeNavbar}>Home</NavLink>
                 </li>
@@ -120,30 +120,26 @@ const Navbar = () => {
                   </li>
                 )}
 
-                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
-                  <div className="searchbar-container">
-                    <div className='searchbar'>
-                      <form className="d-flex my-0" onSubmit={handleSearchSubmit}>
+                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 w-100">
+                  <li className="nav-item">
+                    <div className="searchbar-container">
+                      <form className="searchbar d-flex" onSubmit={handleSearchSubmit}>
                         <input
                           type="text"
-                          className="form-control me-2"
+                          className="form-control search-input"
                           placeholder="Search movies..."
                           value={query}
                           onChange={(e) => setQuery(e.target.value.trimStart())}
                         />
-                        <button onClick={() => { closeNavbar(); window.scrollTo(0, 0); }} className="btn btn-primary" type="submit">Search</button>
-
                       </form>
                     </div>
-                  </div>
-
+                  </li>
                 </ul>
+
+
+
               </ul>
-
-
             </div>
-
-
 
             {/* Right Side */}
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

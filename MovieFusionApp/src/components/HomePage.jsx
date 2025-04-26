@@ -43,7 +43,6 @@ const HomePage = () => {
       try {
         if (selectedLanguage && selectedGenre) {
           const res = await MovieService.getMoviesByLanguageAndGenre(selectedLanguage, selectedGenre);
-          console.log('Fetched movies:', res.data);
           const data = res.data.movies || res.data;
           setMovies(Array.isArray(data) ? data : []);
         } else {
@@ -83,34 +82,44 @@ const HomePage = () => {
     <div className='homepage'>
       <div className="container-fluid homepage py-4">
 
-        <div className="language-cards-container">
-          {languages.map((language) => (
-            <div key={language.movie_language} className="language-card">
-              <button
-                className={`language-btn ${selectedLanguage === language.movie_language ? 'active' : ''}`} 
-                onClick={() => setSelectedLanguage(language.movie_language)}  
-              >
-                <div className="card-content">
-                  <h5>{language.movie_language}</h5>  
-                  <p>{language.movie_count} Movies</p>  
-                </div>
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <div className="genre-tabs">
-          {genres.map((genre) => (
-            <button
-              key={genre}
-              className={`genre-tab ${selectedGenre === genre ? 'active' : ''}`}
-              onClick={() => setSelectedGenre(genre)}  
+        <div className="dropdown-row mb-0">
+          {/* Language Dropdown */}
+          <div className="dropdown-container">
+            <label htmlFor="language-select" className="form-label">Select Language:</label>
+            <select
+              id="language-select"
+              className="form-select"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
             >
-              {genre}
-            </button>
-          ))}
+              {languages.map((language) => (
+                <option key={language.movie_language} value={language.movie_language}>
+                  {language.movie_language} ({language.movie_count})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Genre Dropdown */}
+          <div className="dropdown-container">
+            <label htmlFor="genre-select" className="form-label">Select Genre:</label>
+            <select
+              id="genre-select"
+              className="form-select"
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
+              {genres.map((genre) => (
+                <option key={genre} value={genre}>
+                  {genre}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
+
+        {/* Show More Button */}
         <div className="button-container">
           <button
             className="see-more-btn"
@@ -120,9 +129,10 @@ const HomePage = () => {
           </button>
         </div>
 
+        {/* Movie List */}
         <div className={`movie-list ${showMore ? 'show-all' : 'show-limited'}`}>
           {Array.isArray(movies) && movies.slice(0, showMore ? movies.length : 5).map((movie) => (
-            <div key={movie.id} className="movie-item">
+            <div key={movie.movie_id} className="movie-item">
               <div className="poster-container">
                 <img
                   className="poster-image"

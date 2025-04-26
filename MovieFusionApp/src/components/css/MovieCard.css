@@ -1,7 +1,7 @@
 .movie-item {
   position: relative;
   width: 100%;
-  max-width: 300px; /* Adjust max-width for larger screens */
+  max-width: 300px; 
   margin: auto;
 }
 
@@ -47,18 +47,18 @@
 
 @media (max-width: 768px) {
   .movie-item {
-    max-width: 100%; /* Ensure full width on smaller screens */
+    max-width: 100%; 
   }
 }
 
 @media (min-width: 769px) {
   .movie-item {
-    max-width: 250px; /* Slightly smaller card size for larger screens */
+    max-width: 250px; 
   }
 }
 
 @media (min-width: 1200px) {
   .movie-item {
-    max-width: 280px; /* Adjust max-width for even larger screens */
+    max-width: 280px; 
   }
 }
