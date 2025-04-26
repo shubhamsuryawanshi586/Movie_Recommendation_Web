@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import './css/MovieRating.css';
+import Swal from 'sweetalert2';
+
 import RatingService from '../services/RatingService';
 
 const MovieRating = () => {
@@ -10,7 +12,7 @@ const MovieRating = () => {
   const { id } = useParams();
 
   const handleRatingClick = (value) => {
-    setRating(value); 
+    setRating(value);
   };
 
   const handleSubmit = (e) => {
@@ -18,24 +20,77 @@ const MovieRating = () => {
     if (rating > 0) {
       const user = JSON.parse(localStorage.getItem('user'));
       const uid = user?.user_id;
-      console.log("Movie value : " + id);
-      console.log("Rating value : " + rating);
-      console.log("User id : " + uid);
       const data = {
         user_id: uid,
         movie_id: id,
         rating_value: rating
       };
-  
+
       RatingService.addRating(data)
         .then(response => {
           console.log('Rating added successfully:', response.data);
+
+          if (response.data === "You have Already given rating to this Movie...!!") {
+            Swal.fire({
+              title: 'Warning!',
+              text: response.data,
+              icon: 'warning',
+              timer: 1500,
+              position: 'top',
+              width: '300px',
+              padding: '10px',
+              toast: true,
+              background: '#ffffff',
+              showConfirmButton: false,
+            });
+          } else {
+            Swal.fire({
+              title: 'Thank you!',
+              text: response.data,
+              icon: 'success',
+              timer: 1500,
+              position: 'top',
+              width: '300px',
+              padding: '10px',
+              toast: true,
+              background: '#ffffff',
+              showConfirmButton: false,
+            }).then(() => {
+              navigate(`/movie/${id}`);
+            });
+          }
         })
         .catch(error => {
           console.error('Error adding rating:', error);
+          Swal.fire({
+            title: 'Error!',
+            text: error.response?.data || 'Something went wrong!',
+            icon: 'error',
+            timer: 1500,
+            position: 'top',
+            width: '300px',
+            padding: '10px',
+            toast: true,
+            background: '#ffffff',
+            showConfirmButton: false,
+          });
         });
+    } else {
+      Swal.fire({
+        title: 'Select a Rating!',
+        text: 'Please select a rating before submitting.',
+        icon: 'warning',
+        timer: 1500,
+        position: 'top',
+        width: '300px',
+        padding: '10px',
+        toast: true,
+        background: '#ffffff',
+        showConfirmButton: false,
+      });
     }
   };
+
 
   const handleClose = () => {
     navigate(`/movie/${id}`);
