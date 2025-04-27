@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <div 
       className="d-flex justify-content-center align-items-center" 
-      style={{ minHeight: '80vh', paddingTop: '7rem', paddingBottom: '4rem', marginTop:'1.2rem', marginBottom:'1.3rem' }}
+      style={{ minHeight: '90vh', paddingTop: '7rem', paddingBottom: '4rem', marginTop:'1.2rem', marginBottom:'1.3rem' }}
     >
       <div className="card shadow-lg p-4 border-0 rounded-3"  >
         <h2 className="text-center mb-4 text-primary">Contact Us</h2>

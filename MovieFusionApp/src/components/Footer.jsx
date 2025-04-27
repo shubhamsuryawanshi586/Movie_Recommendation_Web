@@ -1,85 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube, FaGithub } from 'react-icons/fa';
-import './css/Footer.css'
+import './css/Footer.css';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);  // You can replace this with your actual auth logic
+  const [loggedIn, setLoggedIn] = useState(false);
 
-   useEffect(() => {
-      const userString = localStorage.getItem('user');
-      setLoggedIn(!!userString);
-    }, []);
-
-  const handleSubscribe = () => {
-    if (email.trim() !== '') {
-      window.open('https://mail.google.com', '_blank');
-    } else {
-      alert('Please enter a valid email address.');
-    }
-  };
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+    setLoggedIn(!!userString);
+  }, []);
 
   return (
-    <footer className="main-footer text-white pt-5 pb-3 p-4">
-      <div className="container">
-        <div className="row text-start d-flex justify-content-center">
-          <div className="col-md-4 mb-4">
-            <p className="text-wrap text-break">
-              Movie Fusion is your source for discovering great films and timeless classics. Dive into a world of cinema with us.
-            </p>
-            {/* Social Icons */}
-            <div className="d-flex mt-3">
-              <a href="https://facebook.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
-              <a href="https://twitter.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-              <a href="https://instagram.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-              <a href="https://linkedin.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
-              <a href="https://youtube.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
-              <a href="https://github.com" className="text-white me-3" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-            </div>
-          </div>
+    <footer className="main-footer text-white pt-3 pb-3">
+      <div className="container d-flex justify-content-between align-items-center">
 
-          {/* Navigation Links */}
-          <div className="col-md-4 mb-4">
-            <h5>Quick Links</h5>
-            <ul className="list-unstyled">
-              {!loggedIn && (
-                <>
-                  <li><NavLink to="/register" className="text-white" onClick={() => window.scrollTo(0, 0)}>User Register</NavLink></li>
-                  <li><NavLink to="/login" className="text-white" onClick={() => window.scrollTo(0, 0)}>User Login</NavLink></li>
-                </>
-              )}
-              <li><NavLink to="/" className="text-white" onClick={() => window.scrollTo(0, 0)}>Home</NavLink></li>
-              <li><NavLink to="/movies" className="text-white" onClick={() => window.scrollTo(0, 0)}>Movies</NavLink></li>
-              <li><NavLink to="/about" className="text-white" onClick={() => window.scrollTo(0, 0)} >About us</NavLink></li>
-              <li><NavLink to="/contact" className="text-white" onClick={() => window.scrollTo(0, 0)}>Contact us</NavLink></li>
-            </ul>
-          </div>
-
-          {/* Newsletter Form */}
-          <div className="col-md-4">
-            <h5>Stay Updated</h5>
-            <p>Subscribe to our newsletter to get the latest movie picks and updates.</p>
-            <input
-              type="email"
-              className="form-control mb-2"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button className="btn btn-warning fw-medium" onClick={handleSubscribe}>
-              Reach to us
-            </button>
-            <small className="text-muted d-block mt-2">
-              We'll never spam you. Please check your Gmail after subscribing.
-            </small>
-          </div>
+        <div className="center-section">
+          <h5 className="footer-heading">Quick Links</h5>
+          <ul className="footer-links list-inline">
+            {!loggedIn && (
+              <>
+                <li className="list-inline-item"><NavLink to="/register" className="footer-link">User Register</NavLink></li>
+                <li className="list-inline-item"><NavLink to="/login" className="footer-link">User Login</NavLink></li>
+              </>
+            )}
+            <li className="list-inline-item"><NavLink to="/" className="footer-link">Home</NavLink></li>
+            <li className="list-inline-item"><NavLink to="/movies" className="footer-link">Movies</NavLink></li>
+            <li className="list-inline-item"><NavLink to="/about" className="footer-link">About Us</NavLink></li>
+            <li className="list-inline-item"><NavLink to="/contact" className="footer-link">Contact Us</NavLink></li>
+          </ul>
         </div>
 
-        {/* Copyright */}
-        <div className="mb-2">
-          <p>© {new Date().getFullYear()} Movie Fusion. All rights reserved.</p>
+        <div className="right-section">
+        <h5 className="footer-heading">Social Links</h5>
+          <div className="social-icons">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><FaYoutube /></a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
+          </div>
         </div>
+      </div>
+
+      <div className="footer-copyright text-center">
+        <p>© {new Date().getFullYear()} Movie Fusion. All rights reserved.</p>
       </div>
     </footer>
   );
