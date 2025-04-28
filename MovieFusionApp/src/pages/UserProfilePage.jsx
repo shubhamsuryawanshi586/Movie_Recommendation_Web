@@ -4,6 +4,7 @@ import AuthService from '../services/AuthService';
 import './css/ProfilePage.css';
 import { Spinner, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UserProfilePage = () => {
   const [profile, setProfile] = useState({ username: '', email: '' });
@@ -11,8 +12,10 @@ const UserProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({ username: '', email: '' });
   const [isAdmin, setIsAdmin] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
@@ -49,6 +52,31 @@ const UserProfilePage = () => {
       });
   };
 
+  const validateForm = () => {
+    let isValid = true;
+    setEmailError('');
+    setUsernameError('');
+  
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!formData.email.match(emailRegex)) {
+      setEmailError('Please enter a valid email address.');
+      isValid = false;
+    }
+  
+    // Validate username (non-empty and only alphabetic characters)
+    const usernameRegex = /^[A-Za-z]+(\s[A-Za-z]+)*$/;
+    if (!formData.username.trim()) {
+      setUsernameError('Username cannot be empty.');
+      isValid = false;
+    } else if (!formData.username.match(usernameRegex)) {
+      setUsernameError('Username can only contain alphabetic characters.');
+      isValid = false;
+    }
+  
+    return isValid;
+  };
+  
   const handleUpdateClick = () => {
     setIsEditing(true);
   };
@@ -62,6 +90,12 @@ const UserProfilePage = () => {
 
   const handleSave = (e) => {
     e.preventDefault();
+
+    // Validate form before saving
+    if (!validateForm()) {
+      return;
+    }
+
     const currentAccount = AuthService.getCurrentAccount();
 
     let updatedProfile;
@@ -89,7 +123,13 @@ const UserProfilePage = () => {
 
     updateProfileMethod(updatedProfile, idToUpdate)
       .then(res => {
-        alert('Profile updated successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Profile updated successfully!',
+          toast: true,
+          position: 'top',
+          timer: 1500,
+        });
 
         const updatedAccount = {
           ...currentAccount,
@@ -110,7 +150,13 @@ const UserProfilePage = () => {
       })
       .catch(err => {
         console.error('Error updating profile:', err);
-        alert('Failed to update profile.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to update profile.',
+          toast: true,
+          position: 'top-end',
+          timer: 1500,
+        });
       });
   };
 
@@ -172,6 +218,7 @@ const UserProfilePage = () => {
                       onChange={handleChange}
                       required
                     />
+                    {usernameError && <small className="text-danger">{usernameError}</small>}
                   </Form.Group>
 
                   <Form.Group className="mb-3">
@@ -183,6 +230,7 @@ const UserProfilePage = () => {
                       onChange={handleChange}
                       required
                     />
+                    {emailError && <small className="text-danger">{emailError}</small>}
                   </Form.Group>
 
                   <div className="text-center mt-4">

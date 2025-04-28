@@ -151,7 +151,7 @@ const AdminDashboard = () => {
                 <th>Title</th>
                 <th>Director</th>
                 <th>Category</th>
-                <th className="text-end">Actions</th> {/* Align Actions header to the right */}
+                <th className="text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -161,7 +161,7 @@ const AdminDashboard = () => {
                     <td>{m.movie_title}</td>
                     <td>{m.movie_director_name}</td>
                     <td>{m.movie_category}</td>
-                    <td className="text-end"> {/* Align action buttons to the right */}
+                    <td className="text-end">
                       <div className="d-grid gap-2 d-md-flex flex-column flex-md-row justify-content-end">
                         <Link className="btn btn-sm btn-primary" to={`/admin/edit/${m.movie_id}`}>
                           Edit

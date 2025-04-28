@@ -11,7 +11,7 @@ import SearchResultsPage from './pages/SearchResultsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserRegisterPage from './pages/UserRegisterPage';
 import AdminRegisterPage from './pages/AdminRegisterPage';
-import UserLoginPage from './pages/UserLoginPage';
+import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import MovieReview from './components/MovieReview';
 import MovieRating from './components/MovieRating';
@@ -33,7 +33,7 @@ const MovieApp = () => {
          
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<UserLoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<UserRegisterPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/register" element={<AdminRegisterPage />} />

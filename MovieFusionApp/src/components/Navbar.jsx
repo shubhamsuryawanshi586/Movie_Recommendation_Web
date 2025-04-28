@@ -157,13 +157,12 @@ const Navbar = () => {
                     Login
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
-                    <li><Link className="dropdown-item" to="/login" onClick={closeNavbar}>User Login</Link></li>
-                    <li><Link className="dropdown-item" to="/register" onClick={closeNavbar}>User Register</Link></li>
-                    <li><Link className="dropdown-item" to="/admin/login" onClick={closeNavbar}>Admin Login</Link></li>
+                    <li><Link className="dropdown-item" to="/login" onClick={closeNavbar}>Login</Link></li>
+                    <li><Link className="dropdown-item" to="/register" onClick={closeNavbar}>Register</Link></li>
                     {(user?.user_role_name === 'Admin' &&
-                      <li><Link className="dropdown-item dropdown-item disabled" to="/admin/register" onClick={closeNavbar}>Admin Register</Link></li>
+                      <li><Link className="dropdown-item dropdown-item disabled" to="/admin/login" onClick={closeNavbar}>Admin Login</Link></li>
                     )}
-
+                    
                   </ul>
                 </li>
               )}
@@ -186,6 +185,9 @@ const Navbar = () => {
                         Logout
                       </button>
                     </li>
+                    {(user?.user_role_name === 'Admin' &&
+                      <li><Link className="dropdown-item" to="/admin/register" onClick={closeNavbar}>Admin Register</Link></li>
+                    )}
                   </ul>
                 </li>
               )}

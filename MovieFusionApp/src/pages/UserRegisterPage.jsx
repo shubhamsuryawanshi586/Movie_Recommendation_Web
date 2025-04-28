@@ -10,15 +10,45 @@ const UserRegisterPage = () => {
     password: '',
   });
 
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    let isValid = true;
+    setEmailError('');
+    setPasswordError('');
+
+    // Email validation (basic format check)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!formData.email.match(emailRegex)) {
+      setEmailError('Please enter a valid email address.');
+      isValid = false;
+    }
+
+    // Password validation (must include at least one lowercase letter, one uppercase letter, one number, and one special character)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+    if (!formData.password.match(passwordRegex)) {
+      setPasswordError('Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { ...formData, user_role_id: 1 }; 
+
+    // Validate form fields before submitting
+    if (!validateForm()) {
+      return;
+    }
+
+    const payload = { ...formData, user_role_id: 1 };
     try {
       await AuthService.userRegister(payload);
       Swal.fire({
@@ -32,7 +62,7 @@ const UserRegisterPage = () => {
         text: 'Please login.',
         willClose: () => navigate('/login'),
       });
-      
+
     } catch (err) {
       Swal.fire({
         icon: 'error',
@@ -40,7 +70,7 @@ const UserRegisterPage = () => {
         text: err.response?.data?.message || 'Something went wrong!',
         position: 'top',
       });
-      
+
       console.error(err);
     }
   };
@@ -87,6 +117,7 @@ const UserRegisterPage = () => {
               required
               autoComplete="email"
             />
+            {emailError && <small className="text-danger">{emailError}</small>}
           </div>
           <div className="mb-4">
             <input
@@ -99,6 +130,7 @@ const UserRegisterPage = () => {
               required
               autoComplete="new-password"
             />
+            {passwordError && <small className="text-danger">{passwordError}</small>}
           </div>
           <button className="btn btn-primary w-100 rounded-3" type="submit">
             Register as User

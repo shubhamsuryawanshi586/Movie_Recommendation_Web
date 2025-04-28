@@ -4,9 +4,10 @@ import AuthService from '../services/AuthService';
 import Swal from 'sweetalert2';
 
 const AdminLoginPage = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,43 +17,69 @@ const AdminLoginPage = () => {
     }
   }, [navigate]);
 
+  const validateForm = () => {
+    let isValid = true;
+    setEmailError('');
+    setPasswordError('');
+
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email.match(emailRegex)) {
+      setEmailError('Please enter a valid email address.');
+      isValid = false;
+    }
+
+    // Validate password (minimum 6 characters)
+    if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long.');
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // Validate form before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       await AuthService.adminLogin({ email, password });
 
-      await Swal.fire({
+      Swal.fire({
         icon: 'success',
         title: 'Login Successful!',
         text: 'Welcome to Movie Fusion, Admin!',
         timer: 1500,
         showConfirmButton: false,
-        position: 'top', 
-        width: '300px', 
-        padding: '10px', 
-        toast: true, 
+        position: 'top',
+        width: '300px',
+        padding: '10px',
+        toast: true,
         background: '#ffffff',
       });
 
-
+      setEmail('');
+      setPassword('');
       navigate('/admin/dashboard');
     } catch (err) {
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
-        text: 'Please check your email and password.',
+        text: err.response?.data?.message || 'Please check your email and password.',
         showConfirmButton: false,
         timer: 1500,
-        position: 'top', 
-        width: '300px', 
+        position: 'top',
+        width: '300px',
         padding: '10px',
         toast: true,
         background: '#ffffff',
       });
-      
     }
   };
-
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 mt-4 p-2">
@@ -85,6 +112,7 @@ const AdminLoginPage = () => {
               autoComplete="email"
               required
             />
+            {emailError && <small className="text-danger">{emailError}</small>}
           </div>
           <div className="mb-4">
             <input
@@ -96,6 +124,7 @@ const AdminLoginPage = () => {
               autoComplete="current-password"
               required
             />
+            {passwordError && <small className="text-danger">{passwordError}</small>}
           </div>
           <button className="btn btn-dark w-100 rounded-3" type="submit">
             Login

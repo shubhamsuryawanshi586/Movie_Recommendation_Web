@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 const UserLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,11 +16,38 @@ const UserLoginPage = () => {
     }
   }, [navigate]);
 
+  const validateForm = () => {
+    let formErrors = { email: '', password: '' };
+    let isValid = true;
+
+    // Email validation (basic regex check)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email.match(emailRegex)) {
+      formErrors.email = 'Please enter a valid email address';
+      isValid = false;
+    }
+
+    // Password validation (minimum 6 characters)
+    if (password.length < 6) {
+      formErrors.password = 'Password must be at least 6 characters long';
+      isValid = false;
+    }
+
+    setErrors(formErrors);
+    return isValid;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return; // Stop if validation fails
+    }
+
     try {
       const loginData = { email, password };
-      const res = await AuthService.userLogin(loginData);
+      await AuthService.userLogin(loginData);
+
       await Swal.fire({
         icon: 'success',
         title: 'Login Successful!',
@@ -33,10 +61,10 @@ const UserLoginPage = () => {
         background: '#ffffff',
       });
 
-      navigate('/'); 
+      navigate('/');
       window.location.reload();
     } catch (err) {
-      console.error('Login error:', err); 
+      console.error('Login error:', err);
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
@@ -83,6 +111,7 @@ const UserLoginPage = () => {
               required
               autoComplete="username"
             />
+            {errors.email && <small className="text-danger">{errors.email}</small>}
           </div>
           <div className="mb-4">
             <input
@@ -94,6 +123,9 @@ const UserLoginPage = () => {
               required
               autoComplete="current-password"
             />
+            {errors.password && (
+              <small className="text-danger">{errors.password}</small>
+            )}
           </div>
           <button className="btn btn-primary w-100 rounded-3" type="submit">
             Login
