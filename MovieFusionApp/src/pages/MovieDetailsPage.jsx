@@ -13,7 +13,7 @@ const MovieDetailsPage = () => {
   const [posterUrl, setPosterUrl] = useState('/default-poster.jpg');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [watchUrl, setWatchUrl] = useState(null);
-  const [showTrailerModal, setShowTrailerModal] = useState(false); // State for modal visibility
+  const [showTrailerModal, setShowTrailerModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -82,121 +82,40 @@ const MovieDetailsPage = () => {
   };
 
   const handleReviewClick = () => {
+    const hasWatched = localStorage.getItem(`watched_${movie.movie_id}`) === 'true';
+
+    if (!hasWatched) {
+      showWatchRequiredAlert('review');
+      return;
+    }
+
     if (isUserLoggedIn) navigate(`/movie/${movie.movie_id}/review`);
     else showLoginAlert('review');
   };
 
   const handleRateClick = () => {
-    if (isUserLoggedIn) {
-      navigate(`/movie/${movie.movie_id}/rating`);
+    const hasWatched = localStorage.getItem(`watched_${movie.movie_id}`) === 'true';
+
+    if (!hasWatched) {
+      showWatchRequiredAlert('rate');
+      return;
     }
-    else
-      showLoginAlert('rate');
+
+    if (isUserLoggedIn) navigate(`/movie/${movie.movie_id}/rating`);
+    else showLoginAlert('rate');
   };
 
-  const handleWatchClick = async () => {
-    if (isUserLoggedIn) {
-      if (movie.original_movie_id) {
-        try {
-          const embedUrl = await TMDB.fetchYouTubeTrailerById(movie.original_movie_id);
-          if (embedUrl) {
-            setWatchUrl(embedUrl);
-            setShowTrailerModal(true); // Open modal on click
-          } else if (movie.watch_link) {
-            // If no trailer, use movie.link and redirect to YouTube
-            window.open(movie.watch_link, '_blank');
-          } else {
-            Swal.fire({
-              icon: 'info',
-              title: 'Not Available',
-              text: 'Movie link is not available, and no external movie link is provided.',
-              toast: true,
-              position: 'top',
-              timer: 1500,
-              showConfirmButton: false
-            });
-          }
-        } catch (error) {
-          console.error('Failed to fetch trailer URL:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Failed to fetch movie link.',
-            toast: true,
-            position: 'top',
-            timer: 1500,
-            showConfirmButton: false
-          });
-        }
-      } else {
-        Swal.fire({
-          icon: 'info',
-          title: 'Missing ID',
-          text: 'Original TMDB ID is not available for this movie.',
-          toast: true,
-          position: 'top',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
-    } else {
-      showLoginAlert('watch');
-    }
+  const showWatchRequiredAlert = (action) => {
+    Swal.fire({
+      icon: 'info',
+      title: 'Watch First',
+      text: `Please watch the movie to ${action} this movie.`,
+      toast: true,
+      position: 'top',
+      timer: 2000,
+      showConfirmButton: false
+    });
   };
-  
-  const handleTrailerClick = async () => {
-    if (isUserLoggedIn || !isUserLoggedIn) {
-      if (movie.original_movie_id) {
-        try {
-          const embedUrl = await TMDB.fetchYouTubeTrailerById(movie.original_movie_id);
-
-          if (embedUrl != null) {
-            setWatchUrl(embedUrl);
-            setShowTrailerModal(true); // Open modal on click
-            console.log(movie.watch_link);
-          } else if (movie.watch_link) {
-            // If no trailer, use movie.link and redirect to YouTube
-            console.log(movie.watch_link);
-            window.open(movie.watch_link, '_blank');
-          } else {
-            Swal.fire({
-              icon: 'info',
-              title: 'Not Available',
-              text: 'Trailer link is not available, and no external movie link is provided.',
-              toast: true,
-              position: 'top',
-              timer: 1500,
-              showConfirmButton: false
-            });
-          }
-        } catch (error) {
-          console.error('Failed to fetch trailer URL:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Failed to fetch trailer link.',
-            toast: true,
-            position: 'top',
-            timer: 1500,
-            showConfirmButton: false
-          });
-        }
-      } else {
-        Swal.fire({
-          icon: 'info',
-          title: 'Missing ID',
-          text: 'Original TMDB ID is not available for this movie.',
-          toast: true,
-          position: 'top',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
-    } else {
-      showLoginAlert('watch');
-    }
-  };
-  
 
   const showLoginAlert = (action) => {
     Swal.fire({
@@ -210,26 +129,124 @@ const MovieDetailsPage = () => {
     });
   };
 
+  const handleWatchClick = async () => {
+    if (!isUserLoggedIn) {
+      return showLoginAlert('watch');
+    }
+
+    if (!movie.original_movie_id) {
+      return Swal.fire({
+        icon: 'info',
+        title: 'Missing ID',
+        text: 'Original TMDB ID is not available for this movie.',
+        toast: true,
+        position: 'top',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+
+    try {
+      const embedUrl = await TMDB.fetchYouTubeTrailerById(movie.original_movie_id);
+
+      if (embedUrl) {
+        setWatchUrl(embedUrl);
+        setShowTrailerModal(true);
+
+        // Set timer for 1-minute watch validation
+        setTimeout(() => {
+          localStorage.setItem(`watched_${movie.movie_id}`, 'true');
+        }, 60000); // 1 minute = 60000 ms
+
+      } else if (movie.watch_link) {
+        window.open(movie.watch_link, '_blank');
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Not Available',
+          text: 'Movie link is not available, and no external movie link is provided.',
+          toast: true,
+          position: 'top',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch trailer URL:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to fetch movie link.',
+        toast: true,
+        position: 'top',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  };
+
+  const handleTrailerClick = async () => {
+    if (!movie.original_movie_id) {
+      return Swal.fire({
+        icon: 'info',
+        title: 'Missing ID',
+        text: 'Original TMDB ID is not available for this movie.',
+        toast: true,
+        position: 'top',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+
+    try {
+      const embedUrl = await TMDB.fetchYouTubeTrailerById(movie.original_movie_id);
+
+      if (embedUrl) {
+        setWatchUrl(embedUrl);
+        setShowTrailerModal(true);
+      } else if (movie.watch_link) {
+        window.open(movie.watch_link, '_blank');
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Not Available',
+          text: 'Trailer link is not available, and no external movie link is provided.',
+          toast: true,
+          position: 'top',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch trailer URL:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to fetch trailer link.',
+        toast: true,
+        position: 'top',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  };
+
   const handleClose = () => navigate(`/movies`);
 
   return (
     <div className="movie-details-page">
       <div className="movie-container">
-        {/* Header */}
         <div className="movie-header">
           <h2>{movie.movie_title}</h2>
           <button className="btn btn-danger" onClick={handleClose}>Close</button>
         </div>
 
-        {/* Content */}
         <div className="movie-content">
-          {/* Poster */}
           <div className="movie-poster">
             <img src={posterUrl} alt={`${movie.movie_title} Poster`}
               style={{ opacity: posterUrl === '/default-poster.jpg' ? 0.5 : 1 }} />
           </div>
 
-          {/* Details */}
           <div className="movie-info">
             <p><strong>Director:</strong> {movie.movie_director_name}</p>
             <p><strong>Actors:</strong> {movie.movie_actor1}, {movie.movie_actor2}, {movie.movie_actor3}</p>
@@ -238,8 +255,7 @@ const MovieDetailsPage = () => {
             <p><strong>Duration:</strong> {movie.movie_duration}</p>
             <p><strong>Language:</strong> {movie.movie_language}</p>
 
-            {/* Action Buttons */}
-            <div className="button-group">      
+            <div className="button-group">
               <button className="btn btn-primary" onClick={handleTrailerClick}>Trailer</button>
               <button className="btn btn-success" onClick={handleWatchClick}>Watch</button>
               <button className="btn btn-warning" onClick={handleAddToWatchlist}>Add to Watchlist</button>
@@ -249,10 +265,8 @@ const MovieDetailsPage = () => {
           </div>
         </div>
 
-        {/* Modal for Trailer */}
         <Modal show={showTrailerModal} onHide={() => setShowTrailerModal(false)} centered size="lg">
-          <Modal.Header closeButton>
-          </Modal.Header>
+          <Modal.Header closeButton></Modal.Header>
           <Modal.Body>
             {watchUrl && (
               <div className="ratio ratio-16x9">
@@ -266,7 +280,6 @@ const MovieDetailsPage = () => {
             )}
           </Modal.Body>
         </Modal>
-
       </div>
     </div>
   );
