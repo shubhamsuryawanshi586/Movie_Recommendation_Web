@@ -116,7 +116,7 @@ const Navbar = () => {
                 {/* Movie Recommendation */}
                 {user && user?.user_role_name !== 'Admin' && (
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/movie/recommendation" onClick={closeNavbar}>Recommended Movies</NavLink>
+                    <NavLink className="nav-link" to="/movie/recommendation" onClick={closeNavbar}>Recommend</NavLink>
                   </li>
                 )}
 
@@ -179,7 +179,7 @@ const Navbar = () => {
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li><Link className="dropdown-item" to="/profile" onClick={closeNavbar}>Profile</Link></li>
-                    <li><Link className="dropdown-item" to="/#" onClick={closeNavbar}>Settings</Link></li>
+                    {/* <li><Link className="dropdown-item" to="/#" onClick={closeNavbar}>Settings</Link></li> */}
                     <li>
                       <button className="dropdown-item" onClick={() => { handleLogout(); closeNavbar(); }}>
                         Logout
