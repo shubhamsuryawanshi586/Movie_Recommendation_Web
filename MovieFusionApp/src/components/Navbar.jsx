@@ -69,7 +69,7 @@ const Navbar = () => {
           {/* <Link className="navbar-brand" to="/" onClick={closeNavbar}><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion
           </Link> */}
           <Link className="navbar-brand d-flex align-items-center gap-2" to="/" onClick={closeNavbar}>
-            <img src="/images/tv.png" alt="Movie Fusion Logo" style={{ height: '20px' }} />
+            <img src="/images/video-camera.png" alt="Movie Fusion Logo" style={{ height: '20px' }} />
             <span><span style={{ color: 'orange' }}>M</span>ovie <span style={{ color: 'orange' }}>F</span>usion</span>
           </Link>
 
