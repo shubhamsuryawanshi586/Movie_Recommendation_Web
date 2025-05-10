@@ -7,7 +7,7 @@ import './css/MovieList.css';
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 5;
+  const moviesPerPage = 10;
 
   const user = AuthService.getCurrentAccount();
 
