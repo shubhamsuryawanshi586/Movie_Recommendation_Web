@@ -11,7 +11,7 @@ const Contact = () => {
         <h2 className="text-center mb-4 text-primary">Contact Us</h2>
         <div className="fs-5">
           <p className="mb-3"> <strong>Phone:</strong> 91+ 9158596208</p>
-          <p className="mb-3"> <strong>Email:</strong> shubham@gmail.com </p>
+          <p className="mb-3"> <strong>Email:</strong> moviefusion@gmail.com </p>
           <p> <strong>Address:</strong> Giri's Tech Hub, Pune</p>
         </div>
       </div>
