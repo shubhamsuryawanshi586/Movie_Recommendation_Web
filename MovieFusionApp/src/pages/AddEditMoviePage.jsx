@@ -129,15 +129,15 @@ const AddEditMoviePage = () => {
         const parsedDate = new Date(releaseDate);
         if (isNaN(parsedDate.getTime())) {
           newErrors.movie_release_date = 'Release Date must be a valid date';
-        } else {
-          // Check if the release date is greater than the current date
-          const currentDate = new Date();
-          if (parsedDate <= currentDate) {
-            newErrors.movie_release_date = 'Release Date must be greater than the current date';
-          } else {
-            delete newErrors.movie_release_date; // Remove the error if it's valid
-          }
-        }
+         } //else {
+        //   // Check if the release date is greater than the current date
+        //   const currentDate = new Date();
+        //   if (parsedDate <= currentDate) {
+        //     newErrors.movie_release_date = 'Release Date must be greater than the current date';
+        //   } else {
+        //     delete newErrors.movie_release_date; // Remove the error if it's valid
+        //   }
+        // }
       }
     }
     setErrors(newErrors);
